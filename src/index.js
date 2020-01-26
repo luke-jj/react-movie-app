@@ -1,13 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.css';
 
-const App = () => {
-  return (
-    <div>
-      <h1>Hello, World!</h1>
-      <p>Opening Paragraph</p>
-    </div>
-  );
-};
+import App from './app';
 
 ReactDOM.render(<App />, document.getElementById('root'));
