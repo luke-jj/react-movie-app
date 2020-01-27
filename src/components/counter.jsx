@@ -3,25 +3,33 @@ import React, { Component } from 'react';
 class Counter extends Component {
 
   state = {
-    count: 1,
-    imgUrl: 'https://picsum.photos/200'
+    count: this.props.counter.value
   };
 
   styles = {
-    fontSize: 12,
-    fontWeight: 'bold'
+    marginBottom: '10px'
   };
 
   render() {
     return (
       <React.Fragment>
-        <div>
-          <img src={this.state.imgUrl} alt="" />
+        <div style={this.styles}>
+          <span style={{ fontSize: 15, fontWeight: 'bold' }} className={this.getBadgeClasses()}>{this.formatCount()}</span>
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={() => this.handleIncrement()}
+          >
+            Increment
+          </button>
+
+          { /* delete button */ }
+          <button
+            className="btn btn-danger btn-sm m-2"
+            onClick={() => this.props.onDelete(this.props.counter.id)}
+          >
+            Delete
+          </button>
         </div>
-        <span style={{ fontSize: 15, fontWeight: 'bold' }} className={this.getBadgeClasses()}>{this.formatCount()}</span>
-        <button className="btn btn-secondary btn-sm">
-          Increment
-        </button>
       </React.Fragment>
     );
   }
@@ -36,6 +44,16 @@ class Counter extends Component {
     classes += this.state.count === 0 ? 'warning' : 'primary';
 
     return classes;
+  }
+
+  // handling events
+  handleIncrement() {
+    console.log('increment clicked', this.state);
+
+    // updating state based on previous state
+    this.setState(prevState => {
+      return { count: prevState.count + 1};
+    });
   }
 }
 

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import Counter from './components/counter';
+import Counters from './components/counters';
 
 const App = () => {
   return (
     <div>
       <h1>Hello, World!</h1>
       <p>Opening Paragraph</p>
-      <Counter />
+      <Counters />
     </div>
   );
 };
