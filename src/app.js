@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Navbar from './components/navbar';
 import Counters from './components/counters';
+import Movies from './components/movies';
 
 class App extends Component {
 
@@ -42,7 +43,18 @@ class App extends Component {
 
       return { counters };
     });
-  }
+  };
+
+  handleDecrement = (counter) => {
+    this.setState(prevState => {
+      const counters = [...prevState.counters];
+      const index = counters.indexOf(counter);
+      counters[index] = { ...counter };
+      counters[index].value--;
+
+      return { counters }
+    });
+  };
 
   render() {
     return (
@@ -51,10 +63,12 @@ class App extends Component {
         <main className="container">
           <h1>Hello, World!</h1>
           <p>Opening Paragraph</p>
+          <Movies />
           <Counters
             counters={this.state.counters}
             onReset={this.handleReset}
             onIncrement={this.handleIncrement}
+            onDecrement={this.handleDecrement}
             onDelete={this.handleDelete}
           />
         </main>
