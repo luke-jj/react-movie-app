@@ -7,3 +7,7 @@ body {
 main {
   margin-top: 40px;
 }
+
+.clickable {
+  cursor: pointer;
+}
