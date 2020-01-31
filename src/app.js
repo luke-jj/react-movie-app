@@ -5,6 +5,7 @@ import Navbar from './components/navbar';
 import Counters from './components/counters';
 import Movies from './components/movies';
 import MovieForm from './components/movieform';
+import LoginForm from './components/loginform';
 import Customers from './components/customers';
 import Rentals from './components/rentals';
 import NotFound from './components/notfound';
@@ -76,9 +77,10 @@ class App extends Component {
       <React.Fragment>
         <Navbar totalCounters={this.state.counters.filter(c => c.value > 0).length}/>
         <main className="container">
-          <h1>Hello, World!</h1>
-          <p>Opening Paragraph</p>
+          { /* <h1>Hello, World!</h1> */ }
+          { /* <p>Opening Paragraph</p> */}
           <Switch>
+            <Route path="/login" component={LoginForm} />
             <Route path="/movies/:id" component={MovieForm} />
             <Route path="/movies" component={Movies} />
             <Route path="/customers" component={Customers} />

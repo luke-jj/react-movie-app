@@ -21,6 +21,9 @@ const Navbar = ({ totalCounters }) => {
             {totalCounters}
           </span>
         </NavLink>
+        <NavLink className="nav-item nav-link" to="/login">
+          Login
+        </NavLink>
       </div>
     </nav>
   );
