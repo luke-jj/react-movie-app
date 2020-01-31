@@ -6,6 +6,7 @@ import Counters from './components/counters';
 import Movies from './components/movies';
 import MovieForm from './components/movieform';
 import LoginForm from './components/loginform';
+import RegisterForm from './components/registerform';
 import Customers from './components/customers';
 import Rentals from './components/rentals';
 import NotFound from './components/notfound';
@@ -81,6 +82,7 @@ class App extends Component {
           { /* <p>Opening Paragraph</p> */}
           <Switch>
             <Route path="/login" component={LoginForm} />
+            <Route path="/register" component={RegisterForm} />
             <Route path="/movies/:id" component={MovieForm} />
             <Route path="/movies" component={Movies} />
             <Route path="/customers" component={Customers} />
