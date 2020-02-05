@@ -1,23 +1,10 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+import http from '../services/httpService';
 import Table from './common/table';
-
-const apiEndpoint = 'https://jsonplaceholder.typicode.com/posts';
-
-axios.interceptors.responses.use(null, error => {
-  const expectedError =
-    error.response &&
-    error.response.status >= 400 &&
-    error.response.status < 500;
-
-  if (!expectedError) {
-    console.log('Logging the error.', error);
-    alert('an unexpected error occurred.');
-  }
-
-  return Promise.reject(error);
-});
+import config from '../config.json';
 
 class Posts extends Component {
 
@@ -34,19 +21,19 @@ class Posts extends Component {
 
 
   async componentDidMount() {
-    const { data: posts } = await axios.get(apiEndpoint);
+    const { data: posts } = await http.get(config.apiEndpoint);
     this.setState({ posts });
   }
 
   handleCreate = async () => {
     const obj = { title: 'a', body: 'b' };
-    const { data: post } = await axios.post(apiEndpoint, obj);
+    const { data: post } = await http.post(config.apiEndpoint, obj);
 
-    this.setState(prevState => {
+    this.setState(state => {
       return {
         posts: [
           post,
-          ...prevState.posts
+          ...state.posts
         ]
       };
     });
@@ -54,8 +41,8 @@ class Posts extends Component {
 
   handleUpdate = async post => {
     post.title = 'UPDATED';
-    await axios.put(`${apiEndpoint}/${post.id}`, post);
-    // axios.patch(`${apiEndpoint}/${post.id}`, { title: post.title });
+    await http.put(`${config.apiEndpoint}/${post.id}`, post);
+    // http.patch(`${apiEndpoint}/${post.id}`, { title: post.title });
 
     this.setState(prevState => {
       const posts = [...prevState.posts];
@@ -76,7 +63,7 @@ class Posts extends Component {
     });
 
     try {
-      await axios.delete(`${apiEndpoint}/${post.id}`);
+      await http.delete(`${config.apiEndpoint}/${post.id}`);
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         alert('This post does not exist or has already been deleted.');
@@ -95,6 +82,7 @@ class Posts extends Component {
   render() {
     return (
       <div>
+        <ToastContainer />
         <button className="btn btn-primary mb-3" onClick={this.handleCreate}>
           Create New Thread
         </button>

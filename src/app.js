@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from './components/navbar';
 import Counters from './components/counters';
@@ -77,6 +79,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer />
         <Navbar totalCounters={this.state.counters.filter(c => c.value > 0).length}/>
         <main className="container">
           { /* <h1>Hello, World!</h1> */ }
