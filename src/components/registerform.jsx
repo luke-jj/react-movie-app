@@ -19,14 +19,19 @@ class RegisterForm extends Form {
 
   doSubmit = async () => {
     try {
-      await userService.register(this.state.data);
+      const { data } = this.state;
+      const response = await userService.register(data);
+      // store token
+      localStorage.setItem('token', response.headers['x-auth-token']);
+      // redirect to homepage
+      this.props.history.replace('/');
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        const errors = { ...this.state.errors };
-        // assign the error message received from the server
-        errors.username = ex.response.data;
         // updating the state will display the error as a validation error
         this.setState(state => {
+          const errors = { ...state.errors };
+          // assign the error message received from the server
+          errors.username = ex.response.data;
           return { errors };
         });
       }
