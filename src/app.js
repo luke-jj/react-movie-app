@@ -3,12 +3,14 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import auth from './services/authService';
 import Navbar from './components/navbar';
 import Counters from './components/counters';
 import Movies from './components/movies';
 import MovieForm from './components/movieform';
 import LoginForm from './components/loginform';
 import RegisterForm from './components/registerform';
+import Logout from './components/logout';
 import Posts from './components/posts';
 import Customers from './components/customers';
 import Rentals from './components/rentals';
@@ -24,6 +26,13 @@ class App extends Component {
       { id: 4, value: 0 },
     ]
   };
+
+  componentDidMount() {
+    const user = auth.getCurrentUser();
+    this.setState(state => {
+      return { user };
+    });
+  }
 
   handleDelete = (id) => {
     this.setState(prevState => {
@@ -80,16 +89,35 @@ class App extends Component {
     return (
       <React.Fragment>
         <ToastContainer />
-        <Navbar totalCounters={this.state.counters.filter(c => c.value > 0).length}/>
+        <Navbar
+          user={this.state.user}
+          totalCounters={this.state.counters.filter(c => c.value > 0).length}
+        />
         <main className="container">
-          { /* <h1>Hello, World!</h1> */ }
-          { /* <p>Opening Paragraph</p> */}
           <Switch>
             <Route path="/login" component={LoginForm} />
             <Route path="/register" component={RegisterForm} />
+            <Route path="/logout" component={Logout} />
             <Route path="/forum/posts" component={Posts} />
-            <Route path="/movies/:id" component={MovieForm} />
-            <Route path="/movies" component={Movies} />
+            <Route
+              path="/movies/:id"
+              render={props => {
+                if (!this.state.user) {
+                  return (
+                    <Redirect to={{
+                      pathname: "/login",
+                      state: { from: props.location }
+                    }} />
+                  );
+                }
+
+                return <MovieForm {...props} />;
+              }}
+            />
+            <Route
+              path="/movies"
+              render={props => <Movies {...props} user={this.state.user} />}
+            />
             <Route path="/customers" component={Customers} />
             <Route path="/rentals" component={Rentals} />
             <Route path="/cart" render={() => this.renderCart()} />

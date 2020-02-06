@@ -1,8 +1,9 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Joi from 'joi-browser';
 
+import auth from '../services/authService';
 import Form from './common/form';
-import { login } from '../services/authService';
 
 class LoginForm extends Form {
 
@@ -19,9 +20,12 @@ class LoginForm extends Form {
   doSubmit = async () => {
     try {
       const { username, password } = this.state.data;
-      const { data } = await login(username, password);
-      localStorage.setItem('token', data);
-      this.props.history.replace('/');
+      await auth.login(username, password);
+      // this.props.history.replace('/');
+      const { state } = this.props.location;
+      console.log(state);
+      // TODO: redirect not working correctly
+      window.location = state ? state.from.pathname : '/';
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         // updating the state will display the error as a validation error
@@ -36,6 +40,8 @@ class LoginForm extends Form {
   };
 
   render() {
+    if (auth.getCurrentUser()) return <Redirect to="/" />;
+
     return (
       <div>
         <h1>Login</h1>

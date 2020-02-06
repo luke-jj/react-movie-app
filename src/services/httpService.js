@@ -3,6 +3,10 @@ import { toast } from 'react-toastify';
 
 import logger from './logService';
 
+// default REST API URL extracted from .env files set as a base for all request
+// made with axios
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
 axios.interceptors.response.use(null, error => {
   const expectedError =
     error.response &&
@@ -17,9 +21,14 @@ axios.interceptors.response.use(null, error => {
   return Promise.reject(error);
 });
 
+function setJwt(jwt) {
+  axios.defaults.headers.common['x-auth-token'] = jwt;
+}
+
 export default {
   get: axios.get,
   post: axios.post,
   put: axios.put,
-  delete: axios.delete
+  delete: axios.delete,
+  setJwt
 };

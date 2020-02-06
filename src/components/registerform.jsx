@@ -3,6 +3,7 @@ import Joi from 'joi-browser';
 
 import Form from './common/form';
 import * as userService from '../services/userService';
+import auth from '../services/authService';
 
 class RegisterForm extends Form {
 
@@ -22,9 +23,10 @@ class RegisterForm extends Form {
       const { data } = this.state;
       const response = await userService.register(data);
       // store token
-      localStorage.setItem('token', response.headers['x-auth-token']);
+      auth.loginWithJwt(response.headers['x-auth-token']);
       // redirect to homepage
-      this.props.history.replace('/');
+      // this.props.history.replace('/');
+      window.location = '/';
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         // updating the state will display the error as a validation error

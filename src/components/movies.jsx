@@ -148,6 +148,8 @@ class Movies extends Component {
       searchText
     } = this.state;
 
+    const { user } = this.props;
+
     const { totalCount, data: movies } = this.getPagedData();
 
     if (!count) {
@@ -164,11 +166,22 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link to="/movies/new">
-            <button className="btn btn-primary mb-4">
-              New Movies
-            </button>
-          </Link>
+          {
+            user && (
+              <Link to="/movies/new">
+                <button className="btn btn-primary mb-4">
+                  New Movies
+                </button>
+              </Link>
+            )
+          }
+          {
+            !user && (
+              <button className="btn btn-primary mb-4 disabled">
+                New Movies
+              </button>
+            )
+          }
           <p>Showing {movies.length} of {totalCount} movies.</p>
           <SearchBox text={searchText} onSearch={this.handleSearch} />
           <MoviesTable
