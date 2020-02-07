@@ -16,7 +16,8 @@ const Navbar = ({ totalCounters, user }) => {
           Rentals
         </NavLink>
         <NavLink className="nav-item nav-link" to="/cart">
-          Shopping Cart {' '}
+          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          {' '}
           <span className="badge badge-pill badge-secondary">
             {totalCounters}
           </span>
