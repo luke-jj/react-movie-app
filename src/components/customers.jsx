@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Customers = () => {
+const Customers = ({ user, history }) => {
   return (
     <h2>Customers</h2>
   );

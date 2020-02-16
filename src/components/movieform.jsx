@@ -8,7 +8,7 @@ import { getMovie, saveMovie } from '../services/movieService';
 class MovieForm extends Form {
 
   state = {
-    data: { title: '', genreId: '', numberInStock: '', dailyRentalRate: '' },
+    data: { title: ' ', genreId: '', numberInStock: '', dailyRentalRate: '' },
     genres: [],
     errors: {}
   };
@@ -55,6 +55,16 @@ class MovieForm extends Form {
     };
   }
 
+  getButtonName() {
+    const id = this.props.match.params.id;
+
+    if (id === 'new') {
+      return 'Save';
+    }
+
+    return 'Update';
+  }
+
   doSubmit = async () => {
     await saveMovie(this.state.data);
 
@@ -64,13 +74,15 @@ class MovieForm extends Form {
   render() {
     return (
       <div>
-        <h2>Movie Form</h2>
+        <h2>{this.state.data.title}</h2>
         <form onSubmit={this.handleSubmit}>
-          { this.renderInput('title', 'Title') }
-          { this.renderSelect('genreId', 'Genre', this.state.genres) }
-          { this.renderInput('numberInStock', 'Number in Stock') }
-          { this.renderInput('dailyRentalRate', 'Rate') }
-          { this.renderButton('Save') }
+          <fieldset disabled={!this.props.user.isAdmin}>
+            { this.renderInput('title', 'Title') }
+            { this.renderSelect('genreId', 'Genre', this.state.genres) }
+            { this.renderInput('numberInStock', 'Number in Stock') }
+            { this.renderInput('dailyRentalRate', 'Rate') }
+            { this.renderButton(this.getButtonName()) }
+          </fieldset>
         </form>
       </div>
     );

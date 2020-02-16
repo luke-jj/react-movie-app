@@ -12,7 +12,7 @@ class MoviesTable extends Component {
     { path: 'numberInStock', label: 'Stock' },
     { path: 'dailyRentalRate', label: 'Rate' },
     { key: 'like', content: (item) => <Like liked={item.liked} onClick={() => this.props.onLike(item)} /> },
-    { key: 'delete', content: (item) => <button className="btn btn-danger btn-sm" onClick={() => this.props.onDelete(item)} >Delete</button> },
+    { key: 'delete', content: (item) => <button disabled={!this.props.user || !this.props.user.isAdmin} className="btn btn-danger btn-sm" onClick={() => this.props.onDelete(item)} >Delete</button> },
   ];
 
   render() {

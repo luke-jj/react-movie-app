@@ -82,9 +82,12 @@ class Posts extends Component {
     return (
       <div>
         <ToastContainer />
-        <button className="btn btn-primary mb-3" onClick={this.handleCreate}>
-          Create New Thread
-        </button>
+        <div className="d-flex justify-content-between">
+          <h2 className="mb-4">Forum</h2>
+          <button className="btn btn-primary mb-3" onClick={this.handleCreate}>
+            Create New Thread
+          </button>
+        </div>
         <Table
           sortColumn={this.state.sortColumn}
           columns={this.columns}

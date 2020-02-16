@@ -14,6 +14,7 @@ import Logout from './components/logout';
 import Posts from './components/posts';
 import Customers from './components/customers';
 import Rentals from './components/rentals';
+import Profile from './components/profile';
 import NotFound from './components/notfound';
 
 class App extends Component {
@@ -98,7 +99,7 @@ class App extends Component {
             <Route path="/login" component={LoginForm} />
             <Route path="/register" component={RegisterForm} />
             <Route path="/logout" component={Logout} />
-            <Route path="/forum/posts" component={Posts} />
+            <Route path="/forum" component={Posts} />
             <Route
               path="/movies/:id"
               render={props => {
@@ -111,15 +112,58 @@ class App extends Component {
                   );
                 }
 
-                return <MovieForm {...props} />;
+                return <MovieForm {...props} user={this.state.user} />;
               }}
             />
             <Route
               path="/movies"
               render={props => <Movies {...props} user={this.state.user} />}
             />
-            <Route path="/customers" component={Customers} />
-            <Route path="/rentals" component={Rentals} />
+            <Route
+              path="/customers"
+              render={props => {
+                if (!this.state.user || !this.state.user.isAdmin) {
+                  return (
+                    <Redirect to={{
+                      pathname: "/login",
+                      state: { from: props.location }
+                    }} />
+                  );
+                }
+
+                return <Customers {...props} />;
+              }}
+            />
+            <Route
+              path="/rentals"
+              render={props => {
+                if (!this.state.user || !this.state.user.isAdmin) {
+                  return (
+                    <Redirect to={{
+                      pathname: "/login",
+                      state: { from: props.location }
+                    }} />
+                  );
+                }
+
+                return <Rentals {...props} />;
+              }}
+            />
+            <Route
+              path="/profile"
+              render={props => {
+                if (!this.state.user) {
+                  return (
+                    <Redirect to={{
+                      pathname: "/login",
+                      state: { from: props.location }
+                    }} />
+                  );
+                }
+
+                return <Profile {...props} user={this.state.user} />;
+              }}
+            />
             <Route path="/cart" render={() => this.renderCart()} />
             <Redirect from="/" exact to="/movies" />
             <Route path="/not-found" component={NotFound} />

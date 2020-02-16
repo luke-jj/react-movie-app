@@ -9,3 +9,7 @@ export const register = user => {
     password: user.password
   });
 };
+
+export const getCurrentUserDetails = () => {
+  return http.get(apiEndpoint + '/me');
+};

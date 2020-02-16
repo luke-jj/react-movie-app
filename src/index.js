@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import 'jquery/dist/jquery.min.js';
+import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 
@@ -16,4 +18,3 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById('root')
 );
-

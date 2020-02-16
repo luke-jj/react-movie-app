@@ -158,7 +158,7 @@ class Movies extends Component {
 
     return (
       <div className="row">
-        <div className="col-3">
+        <div className="col-3 d-none d-md-block">
           <ListGroup
             items={genres}
             selectedItem={selectedGenre}
@@ -166,37 +166,40 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          {
-            user && (
-              <Link to="/movies/new">
-                <button className="btn btn-primary mb-4">
-                  New Movies
-                </button>
-              </Link>
-            )
-          }
-          {
-            !user && (
-              <button className="btn btn-primary mb-4 disabled">
-                New Movies
-              </button>
-            )
-          }
           <p>Showing {movies.length} of {totalCount} movies.</p>
           <SearchBox text={searchText} onSearch={this.handleSearch} />
           <MoviesTable
+            user={this.props.user}
             movies={movies}
             sortColumn={sortColumn}
             onLike={this.handleLike}
             onDelete={this.handleDelete}
             onSort={this.handleSort}
           />
-          <Pagination
-            itemsCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={this.handlePageChange}
-          />
+          <div className="d-flex justify-content-between">
+              <Pagination
+                itemsCount={totalCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
+              {
+                (user && user.isAdmin) && (
+                  <Link to="/movies/new">
+                    <button className="btn btn-primary mb-4">
+                      New Movie
+                    </button>
+                  </Link>
+                )
+              }
+              {
+                (!user || !user.isAdmin) && (
+                  <button className="btn btn-primary mb-4 disabled">
+                    New Movie
+                  </button>
+                )
+              }
+          </div>
         </div>
       </div>
     );
