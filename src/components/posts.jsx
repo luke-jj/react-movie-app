@@ -20,7 +20,6 @@ class Posts extends Component {
   ];
 
   async componentDidMount() {
-    console.log(config);
     const { data: posts } = await http.get(config.FORUM);
     this.setState({ posts });
   }
