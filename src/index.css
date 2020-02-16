@@ -11,3 +11,11 @@ main {
 .clickable {
   cursor: pointer;
 }
+
+.form-container {
+  max-width: 280px;
+}
+
+.movie-form-container {
+  max-width: 380px;
+}

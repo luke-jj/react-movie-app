@@ -43,7 +43,7 @@ class LoginForm extends Form {
     if (auth.getCurrentUser()) return <Redirect to="/" />;
 
     return (
-      <div>
+      <div className="form-container mx-auto">
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
           { this.renderInput('username', 'Username') }

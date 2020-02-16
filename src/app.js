@@ -102,18 +102,7 @@ class App extends Component {
             <Route path="/forum" component={Posts} />
             <Route
               path="/movies/:id"
-              render={props => {
-                if (!this.state.user) {
-                  return (
-                    <Redirect to={{
-                      pathname: "/login",
-                      state: { from: props.location }
-                    }} />
-                  );
-                }
-
-                return <MovieForm {...props} user={this.state.user} />;
-              }}
+              render={props => <MovieForm {...props} user={this.state.user} />}
             />
             <Route
               path="/movies"
