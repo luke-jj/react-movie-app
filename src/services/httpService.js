@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import config from '../config';
 
 import logger from './logService';
 
 // default REST API URL extracted from .env files set as a base for all request
-// made with axios
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+// made with axios.
+axios.defaults.baseURL = config.API_URL;
 
 axios.interceptors.response.use(null, error => {
   const expectedError =

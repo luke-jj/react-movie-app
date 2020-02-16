@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import http from '../services/httpService';
 import Table from './common/table';
-import config from '../config.json';
+import config from '../config';
 
 class Posts extends Component {
 
@@ -19,15 +19,15 @@ class Posts extends Component {
     { key: 'delete', content: (item) => <button className="btn btn-danger btn-sm" onClick={() => this.handleDelete(item)}>Delete</button> },
   ];
 
-
   async componentDidMount() {
-    const { data: posts } = await http.get(config.apiEndpoint);
+    console.log(config);
+    const { data: posts } = await http.get(config.FORUM);
     this.setState({ posts });
   }
 
   handleCreate = async () => {
     const obj = { title: 'a', body: 'b' };
-    const { data: post } = await http.post(config.apiEndpoint, obj);
+    const { data: post } = await http.post(config.FORUM, obj);
 
     this.setState(state => {
       return {
@@ -41,7 +41,7 @@ class Posts extends Component {
 
   handleUpdate = async post => {
     post.title = 'UPDATED';
-    await http.put(`${config.apiEndpoint}/${post.id}`, post);
+    await http.put(`${config.FORUM}/${post.id}`, post);
     // http.patch(`${apiEndpoint}/${post.id}`, { title: post.title });
 
     this.setState(prevState => {
@@ -63,7 +63,7 @@ class Posts extends Component {
     });
 
     try {
-      await http.delete(`${config.apiEndpoint}/${post.id}`);
+      await http.delete(`${config.FORUM}/${post.id}`);
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
         alert('This post does not exist or has already been deleted.');
