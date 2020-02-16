@@ -12,6 +12,7 @@ import LoginForm from './components/loginform';
 import RegisterForm from './components/registerform';
 import Logout from './components/logout';
 import Posts from './components/posts';
+import Reviews from './components/reviews';
 import Customers from './components/customers';
 import Rentals from './components/rentals';
 import Profile from './components/profile';
@@ -100,6 +101,10 @@ class App extends Component {
             <Route path="/register" component={RegisterForm} />
             <Route path="/logout" component={Logout} />
             <Route path="/forum" component={Posts} />
+            <Route
+              path="/reviews"
+              render={props => <Reviews {...props} user={this.state.user} />}
+            />
             <Route
               path="/movies/:id"
               render={props => <MovieForm {...props} user={this.state.user} />}
