@@ -7,13 +7,13 @@ class Counters extends Component {
   render() {
     const { counters, onReset, onDelete, onIncrement, onDecrement } = this.props;
     return (
-      <div>
+      <div className="cart-container mx-auto">
         <h2>Shopping Cart</h2>
         <button
           className="btn btn-primary btn-sm m-2"
           onClick={onReset}
         >
-          Reset
+          Clear Cart
         </button>
         {
           counters.map(counter => {
@@ -31,6 +31,12 @@ class Counters extends Component {
             );
           })
         }
+        <button
+          className="btn btn-success btn m-2 mt-4"
+          onClick={onReset}
+        >
+          Proceed To Checkout
+        </button>
       </div>
     );
   }

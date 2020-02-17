@@ -1,10 +1,46 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { getReviews } from '../services/reviewService';
 
 class Reviews extends Component {
+
+  state = {
+    reviews: []
+  }
+
+  async componentDidMount() {
+    const { data: reviews } = await getReviews();
+
+    this.setState(state => {
+      return {
+        reviews: [...reviews]
+      }
+    });
+  }
+
   render() {
     return (
       <div>
-        <h2>Movie Reviews</h2>
+        <h2 className="mb-4">Latest Movie Reviews</h2>
+        {
+          this.state.reviews.map(review => {
+            return (
+              <div className="card mb-3" key={review._id}>
+                <div className="card-header">
+                  Movie: {' '}
+                  <Link to={`/movies/${review.movie._id}`}>
+                    {review.movie.title}
+                  </Link> {' '}
+                  Genre: {review.movie.genre.name}
+                </div>
+                <div className="card-body">
+                  <h5 className="card-title">{review.title} <small>by {review.user.name}</small></h5>
+                  <p className="card-text">{review.text}</p>
+                </div>
+              </div>
+            );
+          })
+        }
       </div>
     );
   }

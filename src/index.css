@@ -19,3 +19,7 @@ main {
 .movie-form-container {
   max-width: 380px;
 }
+
+.cart-container {
+  max-width: 600px;
+}
