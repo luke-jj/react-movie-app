@@ -42,7 +42,7 @@ class Profile extends Form {
     if (!auth.getCurrentUser()) return <Redirect to="/" />;
 
     return (
-      <React.Fragment>
+      <div className="form-container">
         <h2>User Profile</h2>
         <form onSubmit={this.handleSubmit}>
           <fieldset disabled={!this.props.user.isAdmin}>
@@ -54,7 +54,7 @@ class Profile extends Form {
             { this.renderButton('Save') }
           </fieldset>
         </form>
-      </React.Fragment>
+      </div>
     );
   }
 };

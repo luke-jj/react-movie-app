@@ -43,12 +43,12 @@ class RegisterForm extends Form {
   render() {
     return (
       <div className="mx-auto form-container">
-        <h1>Register</h1>
+        <h1>Sign Up</h1>
         <form onSubmit={this.handleSubmit}>
           { this.renderInput('username', 'Username') }
           { this.renderInput('password', 'Password', 'password') }
           { this.renderInput('name', 'Name') }
-          { this.renderButton('Register') }
+          { this.renderButton('Confirm') }
         </form>
       </div>
     );
