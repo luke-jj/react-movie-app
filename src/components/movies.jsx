@@ -153,7 +153,13 @@ class Movies extends Component {
     const { totalCount, data: movies } = this.getPagedData();
 
     if (!count) {
-      return ( <div><p>There are no movies in the database</p></div> );
+      return (
+        <div className="text-center">
+          <div className="spinner-border text-primary" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      );
     }
 
     return (
