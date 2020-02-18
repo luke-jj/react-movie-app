@@ -8,7 +8,7 @@ import { getMovie, saveMovie } from '../services/movieService';
 class MovieForm extends Form {
 
   state = {
-    data: { title: ' ', genreId: '', numberInStock: '', dailyRentalRate: '' },
+    data: { title: '\u00a0', genreId: '', numberInStock: '', dailyRentalRate: '' },
     genres: [],
     errors: {}
   };
