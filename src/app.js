@@ -6,13 +6,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import auth from './services/authService';
 import Navbar from './components/navbar';
 import Counters from './components/counters';
-import Movies from './components/movies';
-import MovieForm from './components/movieform';
 import LoginForm from './components/loginform';
 import RegisterForm from './components/registerform';
 import Logout from './components/logout';
-import Posts from './components/posts';
+import Movies from './components/movies';
+import MovieForm from './components/movieform';
 import Reviews from './components/reviews';
+import Forum from './components/forum';
+import Thread from './components/thread';
+import ThreadForm from './components/threadform';
 import Customers from './components/customers';
 import Rentals from './components/rentals';
 import Profile from './components/profile';
@@ -100,7 +102,31 @@ class App extends Component {
             <Route path="/login" component={LoginForm} />
             <Route path="/register" component={RegisterForm} />
             <Route path="/logout" component={Logout} />
-            <Route path="/forum" component={Posts} />
+            <Route
+              path="/forum/new"
+              render={props => {
+                if (!this.state.user) {
+                  return (
+                    <Redirect to={{
+                      pathname: "/login",
+                      state: { from: props.location }
+                    }} />
+                  );
+                }
+
+                return (
+                  <ThreadForm {...props} user={this.state.user} />
+                );
+              }}
+            />
+            <Route
+              path="/forum/:id"
+              render={props => <Thread {...props} user={this.state.user} />}
+            />
+            <Route
+              path="/forum"
+              render={props => <Forum {...props} user={this.state.user} />}
+            />
             <Route
               path="/reviews"
               render={props => <Reviews {...props} user={this.state.user} />}

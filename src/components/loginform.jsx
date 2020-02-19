@@ -21,10 +21,7 @@ class LoginForm extends Form {
     try {
       const { username, password } = this.state.data;
       await auth.login(username, password);
-      // this.props.history.replace('/');
       const { state } = this.props.location;
-      console.log(state);
-      // TODO: redirect not working correctly
       window.location = state ? state.from.pathname : '/';
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {

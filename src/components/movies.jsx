@@ -8,6 +8,7 @@ import { getGenres } from '../services/genreService';
 import { paginate } from '../utils/paginate';
 import Pagination from './common/pagination';
 import ListGroup from './common/listgroup';
+import Spinner from './common/spinner';
 import MoviesTable from './moviestable';
 import SearchBox from './searchbox';
 
@@ -25,14 +26,6 @@ class Movies extends Component {
   };
 
   componentDidMount() {
-    // const { data: genres } = await getGenres();
-    // const { data: movies } = await getMovies();
-
-    // this.setState({
-      // movies: movies,
-      // genres: [ {_id: '', name: 'All'}, ...genres ]
-    // });
-
     Promise.all([getGenres(), getMovies()])
       .then(result => {
         this.setState({
@@ -63,8 +56,8 @@ class Movies extends Component {
   };
 
   handleLike = (movie) => {
-    this.setState(prevState => {
-      const movies = [...prevState.movies];
+    this.setState(state => {
+      const movies = [...state.movies];
       const index = movies.indexOf(movie);
       movies[index] = { ...movies[index] };
       movies[index].liked = !movies[index].liked;
@@ -153,13 +146,7 @@ class Movies extends Component {
     const { totalCount, data: movies } = this.getPagedData();
 
     if (!count) {
-      return (
-        <div className="text-center">
-          <div className="spinner-border text-primary" role="status">
-            <span className="sr-only">Loading...</span>
-          </div>
-        </div>
-      );
+      return <Spinner />;
     }
 
     return (

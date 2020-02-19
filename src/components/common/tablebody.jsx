@@ -19,6 +19,7 @@ class TableBody extends Component {
 
     return (
       <tbody>
+
         {
           data.map(item => (
             <tr key={item._id}>
