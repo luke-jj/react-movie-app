@@ -4,7 +4,7 @@ import Joi from 'joi-browser';
 
 import auth from '../services/authService';
 import Form from './common/form';
-import { getCurrentUserDetails } from '../services/userService';
+import { getCurrentUserDetails, deleteCurrentUser } from '../services/userService';
 
 class Profile extends Form {
 
@@ -38,6 +38,15 @@ class Profile extends Form {
     console.log('submitting');
   };
 
+  async handleDelete() {
+    try {
+      await deleteCurrentUser();
+      auth.logout();
+      window.location = '/';
+    } catch (ex) {
+    }
+  }
+
   render() {
     if (!auth.getCurrentUser()) return <Redirect to="/" />;
 
@@ -54,6 +63,64 @@ class Profile extends Form {
             { this.renderButton('Save') }
           </fieldset>
         </form>
+        <button
+          disabled={!this.props.user}
+          className="btn btn-danger mt-5"
+          data-toggle="modal"
+          data-target="#deleteModal"
+          type="button"
+        >
+          Delete Account
+        </button>
+
+        <div
+          className="modal fade"
+          id="deleteModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="deleteUserModal"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5
+                  className="modal-title"
+                  id="deleteUserModal"
+                >
+                  User Account Deletion
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                Are you sure you want to leave?
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  No, I want to stay.
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={this.handleDelete}
+                >
+                  Yes, delete my account.
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Joi from 'joi-browser';
 
 import Form from './common/form';
@@ -48,6 +49,11 @@ class RegisterForm extends Form {
           { this.renderInput('username', 'Username') }
           { this.renderInput('password', 'Password', 'password') }
           { this.renderInput('name', 'Name') }
+          <div className="mb-2" >
+            <Link to="/login" tabIndex="-1">
+              Already have an account? Click here!
+            </Link>
+          </div>
           { this.renderButton('Confirm') }
         </form>
       </div>

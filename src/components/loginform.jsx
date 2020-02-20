@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Joi from 'joi-browser';
 
 import auth from '../services/authService';
@@ -45,6 +45,11 @@ class LoginForm extends Form {
         <form onSubmit={this.handleSubmit}>
           { this.renderInput('username', 'Username') }
           { this.renderInput('password', 'Password', 'password') }
+          <div className="mb-2">
+            <Link to="/register" tabIndex="-1">
+              Not registered yet? Click here!
+            </Link>
+          </div>
           { this.renderButton('Login') }
         </form>
       </div>

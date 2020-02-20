@@ -13,3 +13,7 @@ export const register = user => {
 export const getCurrentUserDetails = () => {
   return http.get(apiEndpoint + '/me');
 };
+
+export const deleteCurrentUser = () => {
+  return http.delete(apiEndpoint + '/me');
+};
