@@ -7,12 +7,14 @@ import moment from 'moment';
 
 import forumService from '../services/forumService';
 import Table from './common/table';
+import Spinner from './common/spinner';
 
 class Forum extends Component {
 
   state = {
     threads: [ { user: {}, lastReply: {}, } ],
-    sortColumn: { order: 'asc', path: 'title' }
+    sortColumn: { order: 'asc', path: 'title' },
+    loading: true
   };
 
   columns = [
@@ -77,7 +79,7 @@ class Forum extends Component {
 
   async componentDidMount() {
     const { data: threads } = await forumService.getThreads();
-    this.setState({ threads });
+    this.setState({ threads, loading: false });
   }
 
   handleDelete = async thread => {
@@ -130,12 +132,15 @@ class Forum extends Component {
             )
           }
         </div>
-        <Table
-          sortColumn={this.state.sortColumn}
-          columns={this.columns}
-          data={this.state.threads}
-          onSort={this.handleSort}
-        />
+        { !this.state.loading &&
+          <Table
+            sortColumn={this.state.sortColumn}
+            columns={this.columns}
+            data={this.state.threads}
+            onSort={this.handleSort}
+          />
+        }
+        { this.state.loading && <Spinner /> }
       </div>
     );
   }
