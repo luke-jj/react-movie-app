@@ -188,7 +188,7 @@ class Movies extends Component {
               {
                 (!user || !user.isAdmin) && (
                   <button className="btn btn-primary mb-4 disabled">
-                    New Movie
+                    Add Movie
                   </button>
                 )
               }

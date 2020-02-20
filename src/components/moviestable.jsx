@@ -7,8 +7,19 @@ import Like from './common/like';
 class MoviesTable extends Component {
 
   columns = [
-    { path: 'title', label: 'Title', content: (movie) => <Link to={`/movies/${movie._id}`}>{movie.title}</Link>},
+    { path: 'title', label: 'Title', content: (movie) => {
+      return (
+        <React.Fragment>
+          <Link to={`/movies/${movie._id}`}>
+            {movie.title} <br/>
+            <img height="94" width="64" src={movie.imgUrl} alt={movie.title + ' pic'}/>
+        </Link>
+        </React.Fragment>
+      );
+      }
+    },
     { path: 'genre.name', label: 'Genre' },
+    { path: 'year', label: 'Year' },
     { path: 'numberInStock', label: 'Stock' },
     { path: 'dailyRentalRate', label: 'Rate' },
     { key: 'like', content: (item) => <Like liked={item.liked} onClick={() => this.props.onLike(item)} /> },

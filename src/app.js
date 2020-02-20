@@ -151,7 +151,7 @@ class App extends Component {
                   );
                 }
 
-                return <Customers {...props} />;
+                return <Customers {...props} user={this.state.user} />;
               }}
             />
             <Route
