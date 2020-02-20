@@ -1,15 +1,17 @@
 import React from 'react';
+import { typography } from './likeStyles.module.scss';
 
 const Like = ({ liked, onClick }) => {
-  const classes = liked ? "fa fa-heart text-danger" : "fa fa-heart-o text-danger";
+  const classes = liked ? "fa fa-bookmark" : "fa fa-bookmark-o";
 
   return (
-    <i
-      className={classes}
-      aria-hidden="true"
-      onClick={onClick}
-      style={{ cursor: 'pointer' }}
-    />
+    <div className={typography}>
+      <i
+        className={classes}
+        aria-hidden="true"
+        onClick={onClick}
+      />
+    </div>
   );
 }
 

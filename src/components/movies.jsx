@@ -12,7 +12,6 @@ import Spinner from './common/spinner';
 import MoviesTable from './moviestable';
 import SearchBox from './searchbox';
 
-
 class Movies extends Component {
 
   state = {
