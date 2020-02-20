@@ -43,7 +43,7 @@ class Forum extends Component {
           <React.Fragment>
             <small>
               {thread.lastReply.username ? `by ${thread.lastReply.username}` : '-'}<br/>
-              {thread.lastReply.date ? moment(thread.lastReply.date).format("dddd, MMMM Do YYYY, h:mm:ss a") : ''}
+              {thread.lastReply.date ? this.formatDate(thread.lastReply.date) : ''}
             </small>
           </React.Fragment>
         );
@@ -70,6 +70,10 @@ class Forum extends Component {
       },
     }
   ];
+
+  formatDate(date) {
+    return moment(date).format("dddd, MMMM Do YYYY, h:mm a");
+  }
 
   async componentDidMount() {
     const { data: threads } = await forumService.getThreads();

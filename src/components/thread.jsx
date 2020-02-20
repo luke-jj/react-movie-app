@@ -81,7 +81,7 @@ class Thread extends Component {
   }
 
   formatDate(date) {
-    return moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a")
+    return moment(date).format("dddd, MMMM Do YYYY, h:mm a")
   }
 
   render() {

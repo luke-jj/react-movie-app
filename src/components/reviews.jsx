@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getReviews } from '../services/reviewService';
+import Spinner from './common/spinner';
 
 class Reviews extends Component {
 
   state = {
-    reviews: []
+    reviews: [],
+    loading: true
   }
 
   async componentDidMount() {
@@ -13,12 +15,17 @@ class Reviews extends Component {
 
     this.setState(state => {
       return {
-        reviews: [...reviews]
+        reviews: [...reviews],
+        loading: false
       }
     });
   }
 
   render() {
+    if (this.state.loading) {
+      return <Spinner />;
+    }
+
     return (
       <div>
         <h2 className="mb-4">Latest Movie Reviews</h2>
