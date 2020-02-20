@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import _ from 'lodash';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import auth from './services/authService';
+import { getBookmarks, createBookmark, deleteBookmark } from './services/bookmarkService';
 import Navbar from './components/navbar';
 import Counters from './components/counters';
 import LoginForm from './components/loginform';
@@ -18,6 +20,7 @@ import ThreadForm from './components/threadform';
 import Customers from './components/customers';
 import Rentals from './components/rentals';
 import Profile from './components/profile';
+import Bookmarks from './components/bookmarks';
 import NotFound from './components/notfound';
 
 class App extends Component {
@@ -28,14 +31,69 @@ class App extends Component {
       { id: 2, value: 0 },
       { id: 3, value: 4 },
       { id: 4, value: 0 },
-    ]
+    ],
+    user: null,
+    bookmarks: []
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const user = auth.getCurrentUser();
-    this.setState(state => {
-      return { user };
-    });
+    const state = {};
+    state.user = user;
+
+    if (user) {
+      const { data } = await getBookmarks();
+      state.bookmarks = data.movies;
+    }
+
+    this.setState(state);
+  }
+
+  handleLike = async (movie) => {
+    if (!this.state.user) {
+      return;
+    }
+
+    const originalBookmarks = this.state.bookmarks;
+    const bookmarks = _.cloneDeep(this.state.bookmarks);
+    const bookmark = bookmarks.find(bookmark => bookmark._id === movie._id);
+
+    if (bookmark) {
+      const index = bookmarks.indexOf(bookmark);
+      bookmarks.splice(index, 1);
+      this.setState(state => {
+        return { bookmarks };
+      });
+
+      try {
+        await deleteBookmark(movie._id);
+      } catch (ex) {
+        if (ex.response && ex.response.status === 404) {
+          toast.error('Bookmark has already been deleted');
+        }
+
+        this.setState(state => {
+          return { bookmarks: originalBookmarks };
+        });
+      }
+    } else {
+      bookmarks.push({ _id: movie._id, title: movie.title });
+      this.setState(state => {
+        return { bookmarks };
+      });
+
+      try {
+        await createBookmark(movie._id);
+      } catch (ex) {
+        if (ex.response && ex.response.status === 404) {
+          toast.error('Bookmark has already been created');
+        }
+
+        this.setState(state => {
+          return { bookmarks: originalBookmarks };
+        });
+      }
+    }
   }
 
   handleDelete = (id) => {
@@ -95,6 +153,7 @@ class App extends Component {
         <ToastContainer />
         <Navbar
           user={this.state.user}
+          bookmarks={this.state.bookmarks}
           totalCounters={this.state.counters.filter(c => c.value > 0).length}
         />
         <main className="container">
@@ -137,7 +196,7 @@ class App extends Component {
             />
             <Route
               path="/movies"
-              render={props => <Movies {...props} user={this.state.user} />}
+              render={props => <Movies {...props} user={this.state.user} bookmarks={this.state.bookmarks} onLike={this.handleLike}/>}
             />
             <Route
               path="/customers"
@@ -167,6 +226,21 @@ class App extends Component {
                 }
 
                 return <Rentals {...props} />;
+              }}
+            />
+            <Route
+              path="/bookmarks"
+              render={props => {
+                if (!this.state.user) {
+                  return (
+                    <Redirect to={{
+                      pathname: "/login",
+                      state: { from: props.location }
+                    }} />
+                  );
+                }
+
+                return <Bookmarks {...props} user={this.state.user} bookmarks={this.state.bookmarks}/>;
               }}
             />
             <Route

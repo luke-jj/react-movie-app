@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import Like from './common/like';
+import { bookmark, cart } from './navbar.module.scss';
 
 const Navbar = ({ totalCounters, user }) => {
   const navClasses = (!user || !user.isAdmin)
@@ -31,12 +33,19 @@ const Navbar = ({ totalCounters, user }) => {
           </NavLink>
         </div>
         <div className="navbar-nav ml-auto">
+          <NavLink className="nav-item nav-link" to="/bookmarks">
+            <div className={bookmark}>
+              <Like liked={true}/>
+            </div>
+          </NavLink>
           <NavLink className="nav-item nav-link" to="/cart">
-            <i className="fa fa-shopping-cart text-success align-middle" aria-hidden="true"></i>
-            {' '}
-            <span className="badge badge-pill badge-success align-middle">
-              {totalCounters}
-            </span>
+            <div className={cart}>
+              <i className="fa fa-shopping-cart text-success" aria-hidden="true"></i>
+              {' '}
+              <span className="badge badge-pill badge-success">
+                {totalCounters}
+              </span>
+            </div>
           </NavLink>
           { !user &&
             <React.Fragment>

@@ -14,24 +14,59 @@ import SearchBox from './searchbox';
 
 class Movies extends Component {
 
-  state = {
-    movies: [],
-    genres: [],
-    pageSize: 4,
-    currentPage: 1,
-    selectedGenre: null,
-    searchText: '',
-    sortColumn: { path: 'title', order: 'asc' }
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      movies: [],
+      genres: [],
+      pageSize: 4,
+      currentPage: 1,
+      selectedGenre: null,
+      searchText: '',
+      sortColumn: { path: 'title', order: 'asc' }
+    };
+  }
 
-  componentDidMount() {
-    Promise.all([getGenres(), getMovies()])
-      .then(result => {
-        this.setState({
-          genres: [ {_id: '', name: 'All'}, ...result[0].data ],
-          movies: result[1].data,
-        });
+  async componentDidMount() {
+    const result = await Promise.all([getGenres(), getMovies()]);
+    const genres = result[0].data;
+    const movies = result[1].data;
+    const { bookmarks } = this.props;
+
+    if (bookmarks) {
+      movies.forEach(movie => {
+        if (bookmarks.find(m => m._id === movie._id)) {
+          movie.liked = true;
+        } else {
+          movie.liked = false;
+        }
       });
+    }
+
+    this.setState({
+      genres,
+      movies
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { bookmarks } = this.props;
+
+    if (bookmarks !== prevProps.bookmarks) {
+      const movies = _.cloneDeep(this.state.movies);
+
+      movies.forEach(movie => {
+        if (bookmarks.find(m => m._id === movie._id)) {
+          movie.liked = true;
+        } else {
+          movie.liked = false;
+        }
+      });
+
+      this.setState(state => {
+        return { movies };
+      });
+    }
   }
 
   handleDelete = async movie => {
@@ -53,17 +88,6 @@ class Movies extends Component {
       });
     }
   };
-
-  handleLike = (movie) => {
-    this.setState(state => {
-      const movies = [...state.movies];
-      const index = movies.indexOf(movie);
-      movies[index] = { ...movies[index] };
-      movies[index].liked = !movies[index].liked;
-
-      return { movies };
-    });
-  }
 
   handlePageChange = (page) => {
     this.setState(prevState => {
@@ -140,7 +164,7 @@ class Movies extends Component {
       searchText
     } = this.state;
 
-    const { user } = this.props;
+    const { user, onLike } = this.props;
 
     const { totalCount, data: movies } = this.getPagedData();
 
@@ -164,7 +188,7 @@ class Movies extends Component {
             user={this.props.user}
             movies={movies}
             sortColumn={sortColumn}
-            onLike={this.handleLike}
+            onLike={onLike}
             onDelete={this.handleDelete}
             onSort={this.handleSort}
           />
