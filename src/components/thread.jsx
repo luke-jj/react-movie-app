@@ -104,13 +104,17 @@ class Thread extends Component {
         </div>
         {
           posts.map(post => {
+            const lines = post.text.split(/(\r\n|\n|\r)/gm);
+
             return (
               <div className="card mb-3" key={post._id}>
                 <div className="card-header">
                   <small>by {post.user.name} - {this.formatDate(post.date)}</small>
                 </div>
                 <div className="card-body">
-                  <p className="card-text">{post.text}</p>
+                  <div className="card-text">
+                    { lines.map((line, index) => <p key={index}>{line}</p>) }
+                  </div>
                 </div>
               </div>
             );
