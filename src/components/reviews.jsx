@@ -27,7 +27,7 @@ class Reviews extends Component {
     }
 
     return (
-      <div>
+      <div className="review-container mx-auto">
         <h2 className="mb-4">Latest Movie Reviews</h2>
         {
           this.state.reviews.map(review => {

@@ -24,6 +24,6 @@ main {
   max-width: 600px;
 }
 
-.thread-container {
+.thread-container, .review-container{
   max-width: 800px;
 }
