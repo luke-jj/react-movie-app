@@ -113,7 +113,7 @@ class ShoppingCart extends Component {
           Proceed To Checkout
         </button>
           { !this.props.items.length &&
-            <p>There are no items in the basket.</p>
+            <p>There are no eggs in your basket.</p>
           }
       </div>
     );
