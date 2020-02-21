@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Joi from 'joi-browser';
 
 import auth from '../services/authService';
-import Form from './common/form';
+import Form from '../components/common/form';
 import { getCurrentUserDetails, deleteCurrentUser } from '../services/userService';
 
 class Profile extends Form {

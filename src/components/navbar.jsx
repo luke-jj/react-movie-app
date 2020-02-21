@@ -65,6 +65,8 @@ const Navbar = ({ totalCounters, user }) => {
             <React.Fragment>
               <NavLink className="nav-item nav-link" to="/profile">
                 <button className="btn btn-sm btn-light">
+                  <span><i className="fa fa-user-circle-o "></i></span>
+                  {' '}
                   { user.name }
                 </button>
               </NavLink>

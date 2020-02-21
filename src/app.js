@@ -3,51 +3,98 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import _ from 'lodash';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import auth from './services/authService';
 import { getBookmarks, createBookmark, deleteBookmark } from './services/bookmarkService';
+import logger from './services/logService';
+import auth from './services/authService';
+
 import Navbar from './components/navbar';
-import Counters from './components/counters';
+import Logout from './actions/logout';
 import LoginForm from './components/loginform';
 import RegisterForm from './components/registerform';
-import Logout from './components/logout';
-import Movies from './components/movies';
+import NotFound from './components/notfound';
+
+import Movies from './scenes/movies';
 import MovieForm from './components/movieform';
-import Reviews from './components/reviews';
-import Forum from './components/forum';
+import Reviews from './scenes/reviews';
+import Forum from './scenes/forum';
 import Thread from './components/thread';
 import ThreadForm from './components/threadform';
-import Customers from './components/customers';
-import Rentals from './components/rentals';
-import Profile from './components/profile';
-import Bookmarks from './components/bookmarks';
-import NotFound from './components/notfound';
+import Customers from './scenes/customers';
+import Rentals from './scenes/rentals';
+import Profile from './scenes/profile';
+import Bookmarks from './scenes/bookmarks';
+import ShoppingCart from './scenes/shoppingcart';
 
 class App extends Component {
 
   state = {
-    counters: [
-      { id: 1, value: 1 },
-      { id: 2, value: 0 },
-      { id: 3, value: 4 },
-      { id: 4, value: 0 },
-    ],
+    shoppingCart: [],
+    bookmarks: [],
     user: null,
-    bookmarks: []
   };
 
   async componentDidMount() {
-    const user = auth.getCurrentUser();
     const state = {};
-    state.user = user;
-
-    if (user) {
-      const { data } = await getBookmarks();
-      state.bookmarks = data.movies;
-    }
-
+    state.user = auth.getCurrentUser();
+    state.bookmarks = await this.populateBookmarks(state.user);
+    state.shoppingCart = this.populateShoppingCart();
     this.setState(state);
   }
+
+  async populateBookmarks(user) {
+    if (user) {
+      try {
+        const { data } = await getBookmarks();
+        return data.movies;
+      } catch (ex) {
+        toast('Something went wrong... Could not retrieve bookmarks.');
+        logger.log(ex);
+        return [];
+      }
+    } else {
+      return [];
+    }
+  }
+
+  populateShoppingCart() {
+    try {
+      const cart = JSON.parse(localStorage.getItem('vidio-cart'));
+
+      if (typeof cart !== 'object') {
+        return [];
+      }
+
+      return [ ...cart ];
+    } catch (ex) {
+      return [];
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.shoppingCart !== this.state.shoppingCart) {
+      console.log('change detected');
+      localStorage.removeItem('vidio-cart');
+      localStorage.setItem('vidio-cart', JSON.stringify(this.state.shoppingCart));
+    }
+  }
+
+  handleAddToCart = (item) => {
+    if (this.state.shoppingCart.find(m => m._id === item._id)) {
+      return;
+    }
+
+    const movie = _.cloneDeep(item);
+    movie.amount = 1;
+
+    this.setState(state => {
+      return {
+        shoppingCart: [
+          ...state.shoppingCart,
+          movie
+        ]
+      };
+    });
+  };
 
   handleLike = async (movie) => {
     if (!this.state.user) {
@@ -58,9 +105,10 @@ class App extends Component {
     const bookmarks = _.cloneDeep(this.state.bookmarks);
     const bookmark = bookmarks.find(bookmark => bookmark._id === movie._id);
 
+    // bookmark already exists - delete it
     if (bookmark) {
-      const index = bookmarks.indexOf(bookmark);
-      bookmarks.splice(index, 1);
+      // set bookmark state to loading before deleting
+      bookmark.loading = true;
       this.setState(state => {
         return { bookmarks };
       });
@@ -76,8 +124,19 @@ class App extends Component {
           return { bookmarks: originalBookmarks };
         });
       }
+
+      // delete loading state bookmark after successful API query.
+      const bookmarksCopied = _.cloneDeep(this.state.bookmarks);
+      const index = bookmarksCopied.findIndex(bookmark => bookmark._id === movie._id);
+      bookmarksCopied.splice(index, 1);
+      this.setState(state => {
+        return { bookmarks: bookmarksCopied };
+      });
+
+    // bookmark does not exist - create it
     } else {
-      bookmarks.push({ _id: movie._id, title: movie.title });
+      // create bookmark with state set to loading
+      bookmarks.push({ _id: movie._id, title: movie.title, loading: true });
       this.setState(state => {
         return { bookmarks };
       });
@@ -93,59 +152,63 @@ class App extends Component {
           return { bookmarks: originalBookmarks };
         });
       }
+
+      // set loading state to false after successful API query
+      const bookmarksCopied = _.cloneDeep(this.state.bookmarks);
+      const bookmarkCopy = bookmarksCopied.find(bookmark => bookmark._id === movie._id);
+      bookmarkCopy.loading = false;
+      this.setState(state => {
+        return { bookmarks: bookmarksCopied };
+      });
     }
   }
 
-  handleDelete = (id) => {
-    this.setState(prevState => {
+  handleDelete = (item) => {
+    this.setState(state => {
       return {
-        counters: prevState.counters.filter(counter => counter.id !== id)
+        shoppingCart: state.shoppingCart.filter(i => i._id !== item._id)
       };
     });
   };
 
-  handleReset = (id) => {
-    this.setState(prevState => {
-      const counters = prevState.counters.map(c => {
-        c.value = 0;
-        return c;
+  handleClear = () => {
+    this.setState(state => {
+      return { shoppingCart: [] };
+    });
+  }
+
+  handleReset = () => {
+    this.setState(state => {
+      const shoppingCart = state.shoppingCart.map(item => {
+        item.amount = 1;
+        return item;
       });
 
-      return { counters };
+      return { shoppingCart };
     });
   };
 
-  handleIncrement = (counter) => {
-    this.setState(prevState => {
-      const counters = [...prevState.counters];
-      const index = counters.indexOf(counter);
-      counters[index] = { ...counter };
-      counters[index].value++;
+  handleIncrement = (item) => {
+    this.setState(state => {
+      const shoppingCart = [...state.shoppingCart];
+      const index = shoppingCart.indexOf(item);
+      shoppingCart[index] = { ...item };
+      shoppingCart[index].amount++;
 
-      return { counters };
+      return { shoppingCart };
     });
   };
 
-  handleDecrement = (counter) => {
-    this.setState(prevState => {
-      const counters = [...prevState.counters];
-      const index = counters.indexOf(counter);
-      counters[index] = { ...counter };
-      counters[index].value--;
+  handleDecrement = (item) => {
+    this.setState(state => {
+      const shoppingCart = [...state.shoppingCart];
+      const index = shoppingCart.indexOf(item);
+      shoppingCart[index] = { ...item };
+      shoppingCart[index].amount--;
 
-      return { counters }
+      return { shoppingCart };
     });
   };
-
-  renderCart = () => (
-    <Counters
-      counters={this.state.counters}
-      onReset={this.handleReset}
-      onIncrement={this.handleIncrement}
-      onDecrement={this.handleDecrement}
-      onDelete={this.handleDelete}
-    />
-  );
 
   render() {
     return (
@@ -154,7 +217,7 @@ class App extends Component {
         <Navbar
           user={this.state.user}
           bookmarks={this.state.bookmarks}
-          totalCounters={this.state.counters.filter(c => c.value > 0).length}
+          totalCounters={this.state.shoppingCart.filter(c => c.amount > 0).length}
         />
         <main className="container">
           <Switch>
@@ -196,7 +259,16 @@ class App extends Component {
             />
             <Route
               path="/movies"
-              render={props => <Movies {...props} user={this.state.user} bookmarks={this.state.bookmarks} onLike={this.handleLike}/>}
+              render={props => {
+                return (
+                  <Movies {...props}
+                    user={this.state.user}
+                    bookmarks={this.state.bookmarks}
+                    onLike={this.handleLike}
+                    onAddToCart={this.handleAddToCart}
+                  />
+                );
+              }}
             />
             <Route
               path="/customers"
@@ -258,7 +330,22 @@ class App extends Component {
                 return <Profile {...props} user={this.state.user} />;
               }}
             />
-            <Route path="/cart" render={() => this.renderCart()} />
+            <Route
+              path="/cart"
+              render={props => {
+                return (
+                  <ShoppingCart
+                    {...props}
+                    items={this.state.shoppingCart}
+                    onReset={this.handleReset}
+                    onClear={this.handleClear}
+                    onIncrement={this.handleIncrement}
+                    onDecrement={this.handleDecrement}
+                    onDelete={this.handleDelete}
+                  />
+                );
+              }}
+            />
             <Redirect from="/" exact to="/movies" />
             <Route path="/not-found" component={NotFound} />
             <Redirect to="/not-found" />

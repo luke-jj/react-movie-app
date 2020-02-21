@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getReviews } from '../services/reviewService';
-import Spinner from './common/spinner';
+import Spinner from '../components/common/spinner';
 
 class Reviews extends Component {
 

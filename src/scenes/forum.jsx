@@ -6,8 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
 
 import forumService from '../services/forumService';
-import Table from './common/table';
-import Spinner from './common/spinner';
+import Table from '../components/common/table';
+import Spinner from '../components/common/spinner';
 
 class Forum extends Component {
 

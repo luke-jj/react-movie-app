@@ -10,13 +10,26 @@ class MoviesTable extends Component {
   };
 
   columns = [
-    { path: 'title', label: 'Title', content: (movie) => <MovieTitle movie={movie} onLike={this.props.onLike}/>},
+    { path: 'title', label: 'Title', content: (movie) => <MovieTitle movie={movie} loading={movie.loading} onLike={this.props.onLike}/>},
     { path: 'genre.name', label: 'Genre' },
     { path: 'year', label: 'Year' },
     { path: 'numberInStock', label: 'Stock' },
     { path: 'dailyRentalRate', label: 'Rate' },
+    { key: 'addCart', content: (movie) => this.renderCartButton(movie)},
     { key: 'delete', content: (movie) => this.renderDeleteButton(movie)}
   ];
+
+  renderCartButton(movie) {
+    return (
+      <button
+        className="btn btn-success btn-sm"
+        type="button"
+        onClick={() => this.props.onAddToCart(movie)}
+      >
+        <span style={{fontSize: '18px'}}><i className="fa fa-shopping-cart" aria-hidden="true"></i></span>
+      </button>
+    );
+  };
 
   renderDeleteButton(movie) {
     return (

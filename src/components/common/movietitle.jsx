@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Like from './like';
+import MovieImage from './movieimage';
 import { bookmark } from './movietitle.module.scss'
 
 class MovieTitle extends Component {
@@ -14,11 +15,16 @@ class MovieTitle extends Component {
           {movie.title} <br/>
         </Link>
         <div className="position-relative">
-          <Link to={`/movies/${movie._id}`}>
-            <img height="94" width="64" src={movie.imgUrl} alt={movie.title + ' pic'}/>
-          </Link>
+          <MovieImage movie={movie} height={94} width={64}/>
           <div className={bookmark}>
-            <Like liked={movie.liked} onClick={() => this.props.onLike(movie)} />
+            { this.props.loading &&
+              <div className="spinner-border" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+            }
+            { !this.props.loading &&
+              <Like liked={movie.liked} onClick={() => this.props.onLike(movie)} />
+            }
           </div>
         </div>
       </React.Fragment>

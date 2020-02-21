@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
 
-import Spinner from './common/spinner';
-import CustomerTable from './customertable';
+import Spinner from '../components/common/spinner';
+import CustomerTable from '../components/customertable';
 import { getCustomers, deleteCustomer } from '../services/customerService';
 
 class Customers extends Component {

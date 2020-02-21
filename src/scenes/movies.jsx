@@ -6,11 +6,11 @@ import { toast } from 'react-toastify';
 import { getMovies, deleteMovie } from '../services/movieService';
 import { getGenres } from '../services/genreService';
 import { paginate } from '../utils/paginate';
-import Pagination from './common/pagination';
-import ListGroup from './common/listgroup';
-import Spinner from './common/spinner';
-import MoviesTable from './moviestable';
-import SearchBox from './searchbox';
+import MoviesTable from '../components/moviestable';
+import Pagination from '../components/common/pagination';
+import ListGroup from '../components/common/listgroup';
+import Spinner from '../components/common/spinner';
+import SearchBox from '../components/common/searchbox';
 
 class Movies extends Component {
 
@@ -34,13 +34,7 @@ class Movies extends Component {
     const { bookmarks } = this.props;
 
     if (bookmarks) {
-      movies.forEach(movie => {
-        if (bookmarks.find(m => m._id === movie._id)) {
-          movie.liked = true;
-        } else {
-          movie.liked = false;
-        }
-      });
+      this.injectBookmarksIntoMovies(movies, bookmarks);
     }
 
     this.setState({
@@ -54,19 +48,25 @@ class Movies extends Component {
 
     if (bookmarks !== prevProps.bookmarks) {
       const movies = _.cloneDeep(this.state.movies);
-
-      movies.forEach(movie => {
-        if (bookmarks.find(m => m._id === movie._id)) {
-          movie.liked = true;
-        } else {
-          movie.liked = false;
-        }
-      });
-
+      this.injectBookmarksIntoMovies(movies, bookmarks);
       this.setState(state => {
         return { movies };
       });
     }
+  }
+
+  injectBookmarksIntoMovies(movies, bookmarks) {
+    movies.forEach(movie => {
+      const bookmark = bookmarks.find(m => m._id === movie._id);
+
+      if (bookmark) {
+        movie.liked = true;
+        movie.loading = bookmark.loading;
+      } else {
+        movie.liked = false;
+        movie.loading = false;
+      }
+    });
   }
 
   handleDelete = async movie => {
@@ -119,9 +119,6 @@ class Movies extends Component {
     });
   };
 
-  /*
-   * Filter, order and paginate data.
-   */
   getPagedData = () => {
     const {
       pageSize,
@@ -154,7 +151,8 @@ class Movies extends Component {
 
   render() {
     const { length: count } = this.state.movies;
-
+    const { user, onLike, onAddToCart } = this.props;
+    const { totalCount, data: movies } = this.getPagedData();
     const {
       pageSize,
       currentPage,
@@ -163,10 +161,6 @@ class Movies extends Component {
       sortColumn,
       searchText
     } = this.state;
-
-    const { user, onLike } = this.props;
-
-    const { totalCount, data: movies } = this.getPagedData();
 
     if (!count) {
       return <Spinner />;
@@ -191,6 +185,7 @@ class Movies extends Component {
             onLike={onLike}
             onDelete={this.handleDelete}
             onSort={this.handleSort}
+            onAddToCart={onAddToCart}
           />
           <div className="d-flex justify-content-between">
               <Pagination

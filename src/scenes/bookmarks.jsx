@@ -4,11 +4,10 @@ class Bookmarks extends Component {
 
   render() {
     const { bookmarks } = this.props;
-    console.log(bookmarks);
 
     return (
       <div>
-        <h2>Bookmarks</h2>
+        <h2>Watchlist</h2>
         <ul>
         {
           bookmarks.map(bookmark => <li key={bookmark._id}>{bookmark.title}</li>)
