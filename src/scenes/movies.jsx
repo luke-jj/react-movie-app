@@ -8,7 +8,7 @@ import { getGenres } from '../services/genreService';
 import { paginate } from '../utils/paginate';
 import MoviesTable from '../components/moviestable';
 import Pagination from '../components/common/pagination';
-import ListGroup from '../components/common/listgroup';
+import GenreList from '../components/genrelist';
 import Spinner from '../components/common/spinner';
 import SearchBox from '../components/common/searchbox';
 
@@ -168,11 +168,11 @@ class Movies extends Component {
 
     return (
       <div className="row">
-        <div className="col-3 d-none d-md-block">
-          <ListGroup
-            items={genres}
-            selectedItem={selectedGenre}
-            onItemSelect={this.handleGenreSelect}
+        <div className="col-2 d-none d-md-block">
+          <GenreList
+            genres={genres}
+            selectedGenre={selectedGenre}
+            onGenreSelect={this.handleGenreSelect}
           />
         </div>
         <div className="col">
