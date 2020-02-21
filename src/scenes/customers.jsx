@@ -45,7 +45,7 @@ class Customers extends Component {
   };
 
   handleSort = (sortColumn) => {
-    this.setState(prevState => {
+    this.setState(state => {
       return { sortColumn };
     });
   };

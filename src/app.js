@@ -72,7 +72,6 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (!prevState.shoppingCart !== this.state.shoppingCart) {
-      console.log('change detected');
       localStorage.removeItem('vidio-cart');
       localStorage.setItem('vidio-cart', JSON.stringify(this.state.shoppingCart));
     }
@@ -297,7 +296,7 @@ class App extends Component {
                   );
                 }
 
-                return <Rentals {...props} />;
+                return <Rentals {...props} user={this.state.user} />;
               }}
             />
             <Route
