@@ -1,0 +1,106 @@
+/* === Import Bootstrap functions and variables === */
+@import "bootstrap/scss/_functions";
+@import "bootstrap/scss/_variables";
+/*-------------------------------------------------------------------*/
+/* Bootstrap Variable Overrides */
+/*-------------------------------------------------------------------*/
+// $theme-colors: (
+  // primary: #234d7b,
+  // secondary: #3b3c3e,
+  // success: #1e6111,
+  // info:  #64c3d2,
+  // warning: #f5e74a,
+  // danger: #820410
+// );
+
+// Body
+//
+// Settings for the `<body>` element.
+$body-bg: rgb(228,226,221);
+$body-color: $gray-800;
+
+// Links
+//
+// Style anchor elements.
+$link-color:                              theme-color("primary");
+$link-decoration:                         none;
+$link-hover-color:                        lighten($link-color, 10%);
+$link-hover-decoration:                   underline;
+// Darken percentage for links with `.text-*` class (e.g. `.text-success`)
+$emphasized-link-hover-darken-percentage: 15%;
+
+// Typography
+//
+// Font, line-height, and color for body text, headings, and more.
+$font-size-base: 0.8125rem; // Assumes the browser default, typically `16px`
+
+$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+$font-family-base:            $font-family-sans-serif !default;
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+$container-max-widths: (
+  sm: 540px,
+  md: 760px,
+  lg: 960px,
+  xl: 1140px
+);
+
+@include _assert-ascending($container-max-widths, "$container-max-widths");
+
+
+
+
+// Navbar
+//
+$navbar-default-bg: rgba(17, 17, 17, .96);
+
+/*-------------------------------------------------------------------*/
+/* === Boostrap Main SCSS === */
+@import "bootstrap/scss/_mixins";
+@import "bootstrap/scss/_root";
+@import "bootstrap/scss/_reboot";
+@import "bootstrap/scss/_type";
+@import "bootstrap/scss/_images";
+@import "bootstrap/scss/_code";
+@import "bootstrap/scss/_grid";
+@import "bootstrap/scss/_tables";
+@import "bootstrap/scss/_forms";
+@import "bootstrap/scss/_buttons";
+@import "bootstrap/scss/_transitions";
+@import "bootstrap/scss/_dropdown";
+@import "bootstrap/scss/_button-group";
+@import "bootstrap/scss/_input-group";
+@import "bootstrap/scss/_custom-forms";
+@import "bootstrap/scss/_nav";
+@import "bootstrap/scss/_navbar";
+@import "bootstrap/scss/_card";
+@import "bootstrap/scss/_breadcrumb";
+@import "bootstrap/scss/_pagination";
+@import "bootstrap/scss/_badge";
+@import "bootstrap/scss/_jumbotron";
+@import "bootstrap/scss/_alert";
+@import "bootstrap/scss/_progress";
+@import "bootstrap/scss/_media";
+@import "bootstrap/scss/_list-group";
+@import "bootstrap/scss/_close";
+@import "bootstrap/scss/_toasts";
+@import "bootstrap/scss/_modal";
+@import "bootstrap/scss/_tooltip";
+@import "bootstrap/scss/_popover";
+@import "bootstrap/scss/_carousel";
+@import "bootstrap/scss/_spinners";
+@import "bootstrap/scss/_utilities";
+@import "bootstrap/scss/_print";
+/*-------------------------------------------------------------------*/
+
+
+/*-------------------------------------------------------------------*/
+/* Bootstrap Class Overrides */
+/*-------------------------------------------------------------------*/
+
+.navbar {
+  background-color: $navbar-default-bg !important;
+}

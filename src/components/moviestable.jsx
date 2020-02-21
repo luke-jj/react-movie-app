@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Table from './common/table';
-import MovieTitle from './common/movietitle'
+import MovieCard from './common/moviecard'
 
 class MoviesTable extends Component {
 
@@ -10,7 +10,7 @@ class MoviesTable extends Component {
   };
 
   columns = [
-    { path: 'title', label: 'Title', content: (movie) => <MovieTitle movie={movie} loading={movie.loading} onLike={this.props.onLike}/>},
+    { path: 'title', label: 'Title', content: (movie) => <MovieCard movie={movie} loading={movie.loading} onLike={this.props.onLike}/>},
     { path: 'genre.name', label: 'Genre' },
     { path: 'year', label: 'Year' },
     { path: 'numberInStock', label: 'Stock' },
