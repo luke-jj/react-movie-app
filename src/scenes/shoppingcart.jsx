@@ -86,6 +86,13 @@ class ShoppingCart extends Component {
     return this.props.items.reduce((acc, cur) => acc + cur.amount, 0);
   }
 
+  getCheckoutSummary() {
+    const totalItems = this.getTotalItems();
+    const totalPrice = this.getTotalPrice();
+
+    return `${totalItems} ${totalItems === 1 ? 'item' : 'items'} for a total of ${this.getTotalPrice()} Galactic ${totalPrice === 1 ? 'Credit' : 'Credits'}.`;
+  }
+
   render() {
     const { sortColumn } = this.state;
     const { items, onReset, onClear } = this.props;
@@ -118,7 +125,7 @@ class ShoppingCart extends Component {
         />
         <div className="clearfix" hidden={this.getDisabledStatus()}>
           <span className="float-right">
-            {this.getTotalItems()} items for a total of {this.getTotalPrice()} Galactic Credits.
+            {this.getCheckoutSummary()}
           </span>
         </div>
         <div>
