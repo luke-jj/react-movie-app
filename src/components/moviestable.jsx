@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import Table from './common/table';
 import MovieCard from './common/moviecard'
@@ -6,7 +7,8 @@ import MovieCard from './common/moviecard'
 class MoviesTable extends Component {
 
   state = {
-    selectedMovie: {}
+    selectedMovie: {},
+    toShoppingCart: false
   };
 
   columns = [
@@ -15,8 +17,26 @@ class MoviesTable extends Component {
     { path: 'year', label: 'Year' },
     { path: 'numberInStock', label: 'Stock' },
     { path: 'dailyRentalRate', label: 'Rate' },
-    { key: 'addCart', content: (movie) => this.renderCartButton(movie)},
-    { key: 'delete', content: (movie) => this.renderDeleteButton(movie)}
+    { key: 'modify', content: (movie) => {
+      return (
+        <div className="d-flex flex-column align-items-center">
+          <div className="mb-2">
+          { this.renderCartButton(movie) }
+          </div>
+          { /*
+          <div className="mb-1">
+          { this.renderEditButton(movie) }
+          </div>
+          <div className="mb-1">
+          { this.renderDeleteButton(movie) }
+          </div>
+          */ }
+          <div>
+          { this.renderReviewButton(movie) }
+          </div>
+        </div>
+      );
+    }},
   ];
 
   renderCartButton(movie) {
@@ -24,12 +44,29 @@ class MoviesTable extends Component {
       <button
         className="btn btn-success btn-sm"
         type="button"
-        onClick={() => this.props.onAddToCart(movie)}
+        onClick={() => {
+          this.props.onAddToCart(movie);
+          this.setState(state => { return { toShoppingCart: true };});
+        }}
       >
-        <span style={{fontSize: '18px'}}><i className="fa fa-shopping-cart" aria-hidden="true"></i></span>
+        <span style={{fontSize: '18px'}}>
+          <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+        </span>
       </button>
     );
   };
+
+  renderEditButton(movie) {
+    return (
+      <button
+        disabled={!this.props.user || !this.props.user.isAdmin}
+        className="btn btn-info btn-sm"
+        type="button"
+      >
+        Edit
+      </button>
+    );
+  }
 
   renderDeleteButton(movie) {
     return (
@@ -46,8 +83,23 @@ class MoviesTable extends Component {
     );
   }
 
+  renderReviewButton(movie) {
+    return (
+      <button
+        className="btn btn-warning btn-sm"
+        type="button"
+      >
+        Add Review
+      </button>
+    );
+  }
+
   render() {
     const { movies, onSort, sortColumn } = this.props;
+
+    if (this.state.toShoppingCart) {
+      return <Redirect to="/cart" />;
+    }
 
     return (
       <>

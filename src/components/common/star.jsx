@@ -2,7 +2,7 @@ import React from 'react';
 
 const Star = () => {
   return (
-    <i class="fa fa-star text-warning" aria-hidden="true"></i>
+    <i className="fa fa-star text-warning" aria-hidden="true"></i>
   );
 };
 

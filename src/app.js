@@ -263,6 +263,7 @@ class App extends Component {
                   <Movies {...props}
                     user={user}
                     bookmarks={bookmarks}
+                    shoppingCart={shoppingCart}
                     onLike={this.handleLike}
                     onAddToCart={this.handleAddToCart}
                   />
