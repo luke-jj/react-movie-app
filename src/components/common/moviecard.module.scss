@@ -3,7 +3,22 @@
   font-size: 44px;
   top: -17px;
   left: -3px;
+  text-shadow: -1px 0 rgba(255,255,255,.7), 0 1px rgba(255,255,255,.7), 1px 0 rgba(255,255,255,.7), 0 -1px rgba(255,255,255,.7);
+  cursor: pointer;
 };
+
+.star {
+  position: absolute;
+  font-size: 22px;
+  top: 216px;
+  left: 8px;
+  text-shadow: -1px 0 rgba(255,255,255,.7), 0 1px rgba(255,255,255,.7), 1px 0 rgba(255,255,255,.7), 0 -1px rgba(255,255,255,.7);
+
+  span {
+    color: black;
+    font-weight: bold;
+  }
+}
 
 .card {
   width: 160px;

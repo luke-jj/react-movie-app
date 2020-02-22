@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Like from './like';
+import Star from './star';
 import MovieImage from './movieimage';
 import styles from './moviecard.module.scss'
 
@@ -14,6 +15,7 @@ class MovieTitle extends Component {
         <div className={styles.card + " card"}>
           <div className="position-relative">
             <MovieImage movie={movie} height={236} width={160}/>
+
             <div className={styles.bookmark}>
               { this.props.loading &&
                 <div className="spinner-border" role="status">
@@ -23,6 +25,10 @@ class MovieTitle extends Component {
               { !this.props.loading &&
                 <Like liked={movie.liked} onClick={() => this.props.onLike(movie)} />
               }
+            </div>
+            <div className={styles.star}>
+              <Star /> {' '}
+              <span>{movie.rating ?? '-'}</span>
             </div>
           </div>
           <div className={styles.cardBody} >

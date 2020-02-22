@@ -1,11 +1,10 @@
 import React from 'react';
-import { typography } from './likeStyles.module.scss';
 
 const Like = ({ liked, onClick }) => {
   const classes = liked ? "fa fa-bookmark text-warning" : "fa fa-bookmark-o text-warning";
 
   return (
-    <div className={typography}>
+    <div>
       <i
         className={classes}
         aria-hidden="true"
