@@ -25,8 +25,8 @@ class MovieTitle extends Component {
               }
             </div>
           </div>
-          <div className={styles.cardBody}>
-            <Link to={`/movies/${movie._id}`}>
+          <div className={styles.cardBody} >
+            <Link to={`/movies/${movie._id}`} tabIndex="-1">
               {movie.title} <br/>
             </Link>
           </div>
