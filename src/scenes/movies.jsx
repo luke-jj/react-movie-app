@@ -90,15 +90,15 @@ class Movies extends Component {
   };
 
   handlePageChange = (page) => {
-    this.setState(prevState => {
+    this.setState(state => {
       return { currentPage: page };
     });
   };
 
   handleGenreSelect = (genre) => {
-    this.setState(prevState => {
+    this.setState(state => {
       return {
-        selectedGenre: genre,
+        selectedGenre: genre === state.selectedGenre ? null : genre,
         searchText: '',
         currentPage: 1
       };
@@ -106,7 +106,7 @@ class Movies extends Component {
   };
 
   handleSort = (sortColumn) => {
-    this.setState(prevState => {
+    this.setState(state => {
       return { sortColumn };
     });
   };
