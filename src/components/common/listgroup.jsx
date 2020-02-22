@@ -4,7 +4,7 @@ const ListGroup = ({ items, textProperty, valueProperty, selectedItem, onItemSel
 
   const getItemClasses = (item) => {
     let classes = 'list-group-item ';
-    classes += selectedItem === item ? 'active' : '';
+    classes += selectedItem[valueProperty] === item[valueProperty] ? 'active' : '';
 
     return classes;
   };
@@ -17,9 +17,13 @@ const ListGroup = ({ items, textProperty, valueProperty, selectedItem, onItemSel
             <li
               key={item[valueProperty]}
               className={getItemClasses(item)}
-              onClick={() => onItemSelect(item)}
             >
-              {item[textProperty]}
+              <button
+                className="page-link"
+                onClick={() => onItemSelect(item)}
+              >
+                <span>{item[textProperty]}</span>
+              </button>
             </li>
           );
         })

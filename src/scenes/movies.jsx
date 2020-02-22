@@ -11,6 +11,7 @@ import Pagination from '../components/common/pagination';
 import GenreList from '../components/genrelist';
 import Spinner from '../components/common/spinner';
 import SearchBox from '../components/common/searchbox';
+import styles from './movies.module.scss';
 
 class Movies extends Component {
 
@@ -21,7 +22,6 @@ class Movies extends Component {
       genres: [],
       pageSize: 4,
       currentPage: 1,
-      selectedGenre: null,
       searchText: '',
       sortColumn: { path: 'title', order: 'asc' }
     };
@@ -37,12 +37,17 @@ class Movies extends Component {
       this.injectBookmarksIntoMovies(movies, bookmarks);
     }
 
-    this.setState({
-      genres: [
-        { _id: '', name: 'All'},
-        ...genres
-      ],
-      movies
+    this.setState(state => {
+      const defaultGenre = { _id: '', name: 'All' };
+
+      return {
+        genres: [
+          defaultGenre,
+          ...genres
+        ],
+        movies,
+        selectedGenre: defaultGenre
+      };
     });
   }
 
@@ -100,11 +105,15 @@ class Movies extends Component {
 
   handleGenreSelect = (genre) => {
     this.setState(state => {
-      return {
-        selectedGenre: genre === state.selectedGenre ? state.genres[0] : genre,
-        searchText: '',
-        currentPage: 1
-      };
+      const updatedState = { searchText: '', currentPage: 1 };
+
+      if (genre._id !== state.selectedGenre._id) {
+        updatedState.selectedGenre = genre;
+      } else {
+        updatedState.selectedGenre = { ...state.genres[0] };
+      }
+
+      return updatedState;
     });
   };
 
@@ -115,10 +124,12 @@ class Movies extends Component {
   };
 
   handleSearch = query => {
-    this.setState({
-      searchText: query,
-      selectedGenre: null,
-      currentPage: 1
+    this.setState(state => {
+      return {
+        searchText: query,
+        selectedGenre: { ...state.genres[0] },
+        currentPage: 1
+      };
     });
   };
 
@@ -179,7 +190,18 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <p>Showing {movies.length} of {totalCount} movies.</p>
+          <div className={styles.topbar}>
+            <span className="align-bottom">Showing {movies.length} of {totalCount} movies.</span>
+
+            <div className="float-right">
+              <Pagination
+                itemsCount={totalCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
+            </div>
+          </div>
           <SearchBox text={searchText} onSearch={this.handleSearch} />
           <MoviesTable
             user={this.props.user}

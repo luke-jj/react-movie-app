@@ -7,7 +7,9 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
   const pageCount = itemsCount / pageSize;
 
   // render nothing if just one page
-  if (Math.ceil(pageCount) === 1) return null;
+  if (Math.ceil(pageCount) === 1) {
+    return null;
+  }
 
   const pages = _.range(1, pageCount + 1);
 
@@ -18,13 +20,12 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
           pages.map(page => {
             return (
               <li className={currentPage === page ? 'page-item active' : 'page-item'} key={page}>
-                <a
+                <button
                   className="page-link"
-                  href="#{page}"
                   onClick={() => onPageChange(page)}
                 >
                   {page}
-                </a>
+                </button>
               </li>
             );
           })

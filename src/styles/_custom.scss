@@ -61,10 +61,38 @@ $navbar-default-bg: rgba(17, 17, 17, .96);
 $navbar-dark-toggler-border-color:  rgba(0,0,0,0);
 
 // List group
-$list-group-active-color:           #222;
+$list-group-active-color:           black;
 $list-group-active-bg:              theme-color("warning");
 $list-group-active-border-color:    rgba(0,0,0,0);
 
+// Pagination
+$pagination-padding-y:              .5rem !default;
+$pagination-padding-x:              .75rem !default;
+$pagination-padding-y-sm:           .25rem !default;
+$pagination-padding-x-sm:           .5rem !default;
+$pagination-padding-y-lg:           .75rem !default;
+$pagination-padding-x-lg:           1.5rem !default;
+$pagination-line-height:            1.25 !default;
+
+$pagination-color:                  $gray-700;
+$pagination-bg:                     $white !default;
+$pagination-border-width:           $border-width !default;
+$pagination-border-color:           $gray-300 !default;
+
+$pagination-focus-box-shadow:       $input-btn-focus-box-shadow !default;
+$pagination-focus-outline:          0 !default;
+
+$pagination-hover-color:            $gray-800;
+$pagination-hover-bg:               $gray-200 !default;
+$pagination-hover-border-color:     $gray-300 !default;
+
+$pagination-active-color:           black;
+$pagination-active-bg:              theme-color("warning");
+$pagination-active-border-color:    rgba(0,0,0,0);
+
+$pagination-disabled-color:         $gray-600 !default;
+$pagination-disabled-bg:            $white !default;
+$pagination-disabled-border-color:  $gray-300 !default;
 /*-------------------------------------------------------------------*/
 /* === Boostrap Main SCSS === */
 /*-------------------------------------------------------------------*/
@@ -112,13 +140,42 @@ $list-group-active-border-color:    rgba(0,0,0,0);
 
 .navbar {
   background-color: $navbar-default-bg !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .list-group-item {
+  padding: 0;
+
+  button {
+    padding: 15px 10px;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: inherit;
+
+    &:hover {
+      background-color: inherit;
+    }
+
+  }
+
   &.active {
     z-index: 2; // Place active items above their siblings for proper border styling
     color: $list-group-active-color;
     background-color: $list-group-active-bg;
     border-color: $list-group-active-border-color;
+
+    &:hover {
+      background-color: $list-group-active-bg;
+    }
+  }
+
+  &:hover {
+    background-color: $gray-100;
   }
 }

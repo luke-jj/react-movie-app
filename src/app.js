@@ -7,7 +7,7 @@ import { getBookmarks, createBookmark, deleteBookmark } from './services/bookmar
 import logger from './services/logService';
 import auth from './services/authService';
 
-import Navbar from './components/navbar';
+import Layout from './components/layout';
 import Logout from './actions/logout';
 import LoginForm from './components/loginform';
 import RegisterForm from './components/registerform';
@@ -210,15 +210,15 @@ class App extends Component {
   };
 
   render() {
+    const { user, bookmarks, shoppingCart } = this.state;
     return (
       <React.Fragment>
         <ToastContainer />
-        <Navbar
-          user={this.state.user}
-          bookmarks={this.state.bookmarks}
-          totalCounters={this.state.shoppingCart.filter(c => c.amount > 0).length}
-        />
-        <main className="container">
+        <Layout
+          user={user}
+          bookmarks={bookmarks}
+          shoppingCart={shoppingCart}
+        >
           <Switch>
             <Route path="/login" component={LoginForm} />
             <Route path="/register" component={RegisterForm} />
@@ -226,7 +226,7 @@ class App extends Component {
             <Route
               path="/forum/new"
               render={props => {
-                if (!this.state.user) {
+                if (!user) {
                   return (
                     <Redirect to={{
                       pathname: "/login",
@@ -236,33 +236,33 @@ class App extends Component {
                 }
 
                 return (
-                  <ThreadForm {...props} user={this.state.user} />
+                  <ThreadForm {...props} user={user} />
                 );
               }}
             />
             <Route
               path="/forum/:id"
-              render={props => <Thread {...props} user={this.state.user} />}
+              render={props => <Thread {...props} user={user} />}
             />
             <Route
               path="/forum"
-              render={props => <Forum {...props} user={this.state.user} />}
+              render={props => <Forum {...props} user={user} />}
             />
             <Route
               path="/reviews"
-              render={props => <Reviews {...props} user={this.state.user} />}
+              render={props => <Reviews {...props} user={user} />}
             />
             <Route
               path="/movies/:id"
-              render={props => <MovieForm {...props} user={this.state.user} />}
+              render={props => <MovieForm {...props} user={user} />}
             />
             <Route
               path="/movies"
               render={props => {
                 return (
                   <Movies {...props}
-                    user={this.state.user}
-                    bookmarks={this.state.bookmarks}
+                    user={user}
+                    bookmarks={bookmarks}
                     onLike={this.handleLike}
                     onAddToCart={this.handleAddToCart}
                   />
@@ -272,7 +272,7 @@ class App extends Component {
             <Route
               path="/customers"
               render={props => {
-                if (!this.state.user || !this.state.user.isAdmin) {
+                if (!user || !user.isAdmin) {
                   return (
                     <Redirect to={{
                       pathname: "/login",
@@ -281,13 +281,13 @@ class App extends Component {
                   );
                 }
 
-                return <Customers {...props} user={this.state.user} />;
+                return <Customers {...props} user={user} />;
               }}
             />
             <Route
               path="/rentals"
               render={props => {
-                if (!this.state.user || !this.state.user.isAdmin) {
+                if (!user || !user.isAdmin) {
                   return (
                     <Redirect to={{
                       pathname: "/login",
@@ -296,13 +296,13 @@ class App extends Component {
                   );
                 }
 
-                return <Rentals {...props} user={this.state.user} />;
+                return <Rentals {...props} user={user} />;
               }}
             />
             <Route
               path="/bookmarks"
               render={props => {
-                if (!this.state.user) {
+                if (!user) {
                   return (
                     <Redirect to={{
                       pathname: "/login",
@@ -311,13 +311,13 @@ class App extends Component {
                   );
                 }
 
-                return <Bookmarks {...props} user={this.state.user} bookmarks={this.state.bookmarks}/>;
+                return <Bookmarks {...props} user={user} bookmarks={bookmarks}/>;
               }}
             />
             <Route
               path="/profile"
               render={props => {
-                if (!this.state.user) {
+                if (!user) {
                   return (
                     <Redirect to={{
                       pathname: "/login",
@@ -326,7 +326,7 @@ class App extends Component {
                   );
                 }
 
-                return <Profile {...props} user={this.state.user} />;
+                return <Profile {...props} user={user} />;
               }}
             />
             <Route
@@ -335,7 +335,7 @@ class App extends Component {
                 return (
                   <ShoppingCart
                     {...props}
-                    items={this.state.shoppingCart}
+                    items={shoppingCart}
                     onReset={this.handleReset}
                     onClear={this.handleClear}
                     onIncrement={this.handleIncrement}
@@ -349,8 +349,7 @@ class App extends Component {
             <Route path="/not-found" component={NotFound} />
             <Redirect to="/not-found" />
           </Switch>
-
-        </main>
+        </Layout>
       </React.Fragment>
     );
   }
