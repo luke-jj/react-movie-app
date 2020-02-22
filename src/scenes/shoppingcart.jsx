@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import Table from '../components/common/table';
+import styles from './shoppingcartStyles.module.scss'
 
 class ShoppingCart extends Component {
 
@@ -10,26 +11,24 @@ class ShoppingCart extends Component {
   }
 
   columns = [
-    { path: 'title', label: 'Title', content: (movie) => <Link to={`/movies/${movie._id}`}>{movie.title}</Link>},
-    { path: '_id', label: 'ID'},
-    { key: 'count', content: (movie) => {
+    { path: 'title', label: 'Item', content: (movie) => <Link to={`/movies/${movie._id}`}>{movie.title}</Link>},
+    { path: 'dailyRentalRate', label: 'Price'},
+    { key: 'count', label: 'Amount', content: (movie) => {
       return (
         <div>
           <button
-            className="btn btn-secondary btn-sm"
+            className="btn btn-secondary btn-sm mr-2"
             onClick={() => this.props.onIncrement(movie)}
           >
             +
           </button>
-          {' '}
-          <span
-            style={{ fontSize: 15, fontWeight: 'bold' }}
-            className={this.getBadgeClasses(movie)}
-          >
-            {this.formatCount(movie)}
+          <span className={this.getBadgeClasses(movie)}>
+            <span className={styles.counter}>
+              {this.formatCount(movie)}
+            </span>
           </span>
           <button
-            className="btn btn-secondary btn-sm m-2"
+            className="btn btn-secondary btn-sm ml-2"
             disabled={this.getDisabledIncrementStatus(movie)}
             onClick={() => this.props.onDecrement(movie)}
           >
@@ -44,7 +43,7 @@ class ShoppingCart extends Component {
           className="btn btn-danger btn-sm m-2"
           onClick={() => this.props.onDelete(movie)}
         >
-          Delete
+          Remove
         </button>
       );
     }}
@@ -75,6 +74,18 @@ class ShoppingCart extends Component {
     return movie.amount < 1;
   }
 
+  getTotalPrice() {
+    return this.props.items.reduce((acc, cur) => {
+      return (
+        acc + ( cur.amount * cur.dailyRentalRate )
+      );
+    },0);
+  }
+
+  getTotalItems() {
+    return this.props.items.reduce((acc, cur) => acc + cur.amount, 0);
+  }
+
   render() {
     const { sortColumn } = this.state;
     const { items, onReset, onClear } = this.props;
@@ -83,7 +94,7 @@ class ShoppingCart extends Component {
     const sorted = _.orderBy(items, [sortColumn.path], [sortColumn.order]);
 
     return (
-      <div>
+      <div className={styles.container}>
         <h2>Shopping Basket</h2>
         <button
           disabled={this.getDisabledStatus()}
@@ -105,16 +116,67 @@ class ShoppingCart extends Component {
           data={sorted}
           onSort={this.handleSort}
         />
-        <button
-          hidden={this.getDisabledStatus()}
-          className="btn btn-success btn m-2 mt-4 float-right"
-          onClick={onReset}
+        <div className="clearfix" hidden={this.getDisabledStatus()}>
+          <span className="float-right">
+            {this.getTotalItems()} items for a total of {this.getTotalPrice()} Galactic Credits.
+          </span>
+        </div>
+        <div>
+          <button
+            hidden={this.getDisabledStatus()}
+            className="btn btn-success btn m-2 mt-4 float-right"
+            data-toggle="modal"
+            data-target="#checkoutNotice"
+            type="button"
+          >
+            Proceed To Checkout
+          </button>
+        </div>
+        <div hidden={!this.getDisabledStatus()}>
+          <p>There are no eggs in your basket.</p>
+        </div>
+
+        <div
+          className="modal fade"
+          id="checkoutNotice"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="deleteUserModal"
+          aria-hidden="true"
         >
-          Proceed To Checkout
-        </button>
-          { !this.props.items.length &&
-            <p>There are no eggs in your basket.</p>
-          }
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5
+                  className="modal-title"
+                  id="checkoutNotice"
+                >
+                  Checkout
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                Not available at the moment.
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close.
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
