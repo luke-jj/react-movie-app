@@ -38,7 +38,10 @@ class Movies extends Component {
     }
 
     this.setState({
-      genres,
+      genres: [
+        { _id: '', name: 'All'},
+        ...genres
+      ],
       movies
     });
   }
@@ -98,7 +101,7 @@ class Movies extends Component {
   handleGenreSelect = (genre) => {
     this.setState(state => {
       return {
-        selectedGenre: genre === state.selectedGenre ? null : genre,
+        selectedGenre: genre === state.selectedGenre ? state.genres[0] : genre,
         searchText: '',
         currentPage: 1
       };

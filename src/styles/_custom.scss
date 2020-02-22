@@ -4,14 +4,16 @@
 /*-------------------------------------------------------------------*/
 /* Bootstrap Variable Overrides */
 /*-------------------------------------------------------------------*/
-// $theme-colors: (
-  // primary: #234d7b,
-  // secondary: #3b3c3e,
-  // success: #1e6111,
-  // info:  #64c3d2,
-  // warning: #f5e74a,
-  // danger: #820410
-// );
+$theme-colors: (
+  primary: #234d7b,
+  secondary: $gray-600,
+  success: #1e6111,
+  info:  #64c3d2,
+  warning: #ffc107,
+  danger: #820410,
+  light: $gray-100,
+  dark: $gray-800
+);
 
 // Body
 //
@@ -58,8 +60,14 @@ $container-max-widths: (
 $navbar-default-bg: rgba(17, 17, 17, .96);
 $navbar-dark-toggler-border-color:  rgba(0,0,0,0);
 
+// List group
+$list-group-active-color:           #222;
+$list-group-active-bg:              theme-color("warning");
+$list-group-active-border-color:    rgba(0,0,0,0);
+
 /*-------------------------------------------------------------------*/
 /* === Boostrap Main SCSS === */
+/*-------------------------------------------------------------------*/
 @import "bootstrap/scss/_mixins";
 @import "bootstrap/scss/_root";
 @import "bootstrap/scss/_reboot";
@@ -104,4 +112,13 @@ $navbar-dark-toggler-border-color:  rgba(0,0,0,0);
 
 .navbar {
   background-color: $navbar-default-bg !important;
+}
+
+.list-group-item {
+  &.active {
+    z-index: 2; // Place active items above their siblings for proper border styling
+    color: $list-group-active-color;
+    background-color: $list-group-active-bg;
+    border-color: $list-group-active-border-color;
+  }
 }
