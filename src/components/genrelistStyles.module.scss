@@ -1,7 +1,9 @@
 .container {
   max-width: 100px;
-}
 
-.item {
-  padding: 10px;
+  ul {
+    li:hover {
+      cursor: pointer;
+    }
+  }
 }
