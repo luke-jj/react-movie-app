@@ -40,28 +40,25 @@ const Navbar = ({ shoppingCart, user }) => {
             </NavLink>
           </div>
           <div className="navbar-nav ml-auto">
-            <NavLink className="nav-item nav-link" to="/bookmarks">
+            <NavLink className={"nav-item nav-link " + styles.bookmark} to="/bookmarks">
               <i className="fa fa-bookmark"></i> {' '}
               Watchlist
             </NavLink>
-            <NavLink className="nav-item nav-link" to="/cart">
-              <div>
+            <NavLink className={"nav-item nav-link " + styles.cart}to="/cart">
                 <i className="fa fa-shopping-cart text-success" aria-hidden="true"></i>
-                {' '}
                 <span className="badge badge-pill badge-success">
                   { shoppingCart.filter(c => c.amount > 0).length }
                 </span>
-              </div>
             </NavLink>
             { !user &&
               <React.Fragment>
                 <NavLink className="nav-item nav-link" to="/login">
-                  <button className="btn btn-sm btn-outline-primary ">
+                  <button className="btn btn-sm btn-outline-primary " tabIndex="-1">
                     Login
                   </button>
                 </NavLink>
                 <NavLink className="nav-item nav-link" to="/register">
-                  <button className="btn btn-sm btn-danger">
+                  <button className="btn btn-sm btn-danger" tabIndex="-1">
                     Sign Up
                   </button>
                 </NavLink>
@@ -70,14 +67,14 @@ const Navbar = ({ shoppingCart, user }) => {
             { user &&
               <React.Fragment>
                 <NavLink className="nav-item nav-link" to="/profile">
-                  <button className="btn btn-sm btn-light">
+                  <button className="btn btn-sm btn-dark" tabIndex="-1">
                     <span><i className="fa fa-user-circle-o "></i></span>
                     {' '}
                     { user.name }
                   </button>
                 </NavLink>
                 <NavLink className="nav-item nav-link" to="/logout">
-                  <button className="btn btn-sm btn-light">
+                  <button className="btn btn-sm btn-dark" tabIndex="-1">
                     Logout
                   </button>
                 </NavLink>
