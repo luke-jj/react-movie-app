@@ -13,11 +13,11 @@ class MoviesTable extends Component {
 
   columns = [
     { path: 'title', label: 'Title', content: (movie) => <MovieCard movie={movie} loading={movie.loading} onLike={this.props.onLike}/>},
-    { path: 'genre.name', label: 'Genre' },
-    { path: 'year', label: 'Year' },
-    { path: 'numberInStock', label: 'Stock' },
-    { path: 'dailyRentalRate', label: 'Rate' },
-    { key: 'modify', content: (movie) => {
+    { path: 'genre.name', label: 'Genre', width: '90px' },
+    { path: 'year', label: 'Year', width: '70px' },
+    { path: 'numberInStock', label: 'Stock', width: '70px' },
+    { path: 'dailyRentalRate', label: 'Rate', width: '70px' },
+    { key: 'modify', width: '130px', content: (movie) => {
       return (
         <div className="d-flex flex-column align-items-center">
           <div className="mb-2">

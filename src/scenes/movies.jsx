@@ -182,14 +182,14 @@ class Movies extends Component {
 
     return (
       <div className="row">
-        <div className="col-2 d-none d-md-block">
+        <div className="col-2-md d-none d-md-block mr-2">
           <GenreList
             genres={genres}
             selectedGenre={selectedGenre}
             onGenreSelect={this.handleGenreSelect}
           />
         </div>
-        <div className="col">
+        <div className="col-sm col-10-md">
           <div className={styles.topbar}>
             <span className="align-bottom">Showing {movies.length} of {totalCount} movies.</span>
 

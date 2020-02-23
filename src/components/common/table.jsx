@@ -5,7 +5,7 @@ import TableBody from './tablebody';
 
 const Table = ({ sortColumn, columns, data, onSort }) => {
   return (
-    <div className="table-responsive-xl">
+    <div className="table-responsive">
       <table className="table">
         <TableHeader
           sortColumn={sortColumn}

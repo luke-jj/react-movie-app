@@ -22,6 +22,7 @@ class Forum extends Component {
       path: 'title',
       key: 'title',
       label: 'Title',
+      width: '200px',
       content: thread => {
         return (
           <React.Fragment>
@@ -40,6 +41,7 @@ class Forum extends Component {
       path: 'lastReply',
       key: 'lastReply',
       label: 'Last Reply',
+      width: '230px',
       content: thread => {
         return (
           <React.Fragment>
