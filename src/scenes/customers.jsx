@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
@@ -44,11 +44,7 @@ class Customers extends Component {
     }
   };
 
-  handleSort = (sortColumn) => {
-    this.setState(state => {
-      return { sortColumn };
-    });
-  };
+  handleSort = (sortColumn) => this.setState(state => ({ sortColumn }));
 
   getSortedCustomers() {
     const { customers, sortColumn } = this.state;
@@ -65,13 +61,12 @@ class Customers extends Component {
     }
 
     return (
-      <React.Fragment>
+      <Fragment>
         <h2>Customers</h2>
         <div className="col">
           <p className="align-middle">
             {customers.length} total Customers.
-            {
-              (user && user.isAdmin) && (
+            { (user && user.isAdmin) && (
                 <Link to="/customers/new" className="float-right">
                   <button className="btn btn-primary mb-4">
                     Add Customer
@@ -79,8 +74,7 @@ class Customers extends Component {
                 </Link>
               )
             }
-            {
-              (!user || !user.isAdmin) && (
+            { (!user || !user.isAdmin) && (
                 <button className="btn btn-primary mb-4 disabled float-right">
                   Add Customer
                 </button>
@@ -95,7 +89,7 @@ class Customers extends Component {
             onSort={this.handleSort}
           />
         </div>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

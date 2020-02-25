@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import styles from './navbar.module.scss';
+import styled from 'styled-components';
+
+const NavIcon = styled(NavLink)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  i {
+    font-size: 18px;
+    padding-right: 3px;
+  }
+`;
 
 const Navbar = ({ shoppingCart, user }) => {
   const navClasses = (!user || !user.isAdmin)
@@ -40,32 +51,22 @@ const Navbar = ({ shoppingCart, user }) => {
             </NavLink>
           </div>
           <div className="navbar-nav ml-auto">
-            <NavLink className={"nav-item nav-link " + styles.bookmark} to="/bookmarks">
+            <NavIcon className="nav-item nav-link" to="/bookmarks">
               <i className="fa fa-bookmark"></i> {' '}
               Watchlist
-            </NavLink>
-            <NavLink className={"nav-item nav-link " + styles.cart}to="/cart">
-                <i className="fa fa-shopping-cart text-success" aria-hidden="true"></i>
-                <span className="badge badge-pill badge-success">
-                  { shoppingCart.filter(c => c.amount > 0).length }
-                </span>
-            </NavLink>
-            { !user &&
-              <React.Fragment>
-                <NavLink className="nav-item nav-link" to="/login">
-                  <button className="btn btn-sm btn-outline-primary " tabIndex="-1">
-                    Login
-                  </button>
-                </NavLink>
-                <NavLink className="nav-item nav-link" to="/register">
-                  <button className="btn btn-sm btn-danger" tabIndex="-1">
-                    Sign Up
-                  </button>
-                </NavLink>
-              </React.Fragment>
-            }
-            { user &&
-              <React.Fragment>
+            </NavIcon>
+            <NavIcon className="nav-item nav-link" to="/cart">
+              <i
+                className="fa fa-shopping-cart text-success"
+                aria-hidden="true"
+              >
+              </i>
+              <span className="badge badge-pill badge-success">
+                { shoppingCart.filter(c => c.amount > 0).length }
+              </span>
+            </NavIcon>
+            { user ? (
+              <Fragment>
                 <NavLink className="nav-item nav-link" to="/profile">
                   <button className="btn btn-sm btn-dark" tabIndex="-1">
                     <span><i className="fa fa-user-circle-o "></i></span>
@@ -78,8 +79,21 @@ const Navbar = ({ shoppingCart, user }) => {
                     Logout
                   </button>
                 </NavLink>
-              </React.Fragment>
-            }
+              </Fragment>
+            ) : (
+              <Fragment>
+                <NavLink className="nav-item nav-link" to="/login">
+                  <button className="btn btn-sm btn-outline-primary " tabIndex="-1">
+                    Login
+                  </button>
+                </NavLink>
+                <NavLink className="nav-item nav-link" to="/register">
+                  <button className="btn btn-sm btn-danger" tabIndex="-1">
+                    Sign Up
+                  </button>
+                </NavLink>
+              </Fragment>
+            )}
           </div>
         </div>
     </nav>

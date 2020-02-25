@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Joi from 'joi-browser';
 
 import Form from './common/form';
+import AuthContainer from './authcontainer';
 import * as userService from '../services/userService';
 import auth from '../services/authService';
 
@@ -43,7 +44,7 @@ class RegisterForm extends Form {
 
   render() {
     return (
-      <div className="mx-auto form-container">
+      <AuthContainer>
         <h1>Sign Up</h1>
         <form onSubmit={this.handleSubmit}>
           { this.renderInput('username', 'Email') }
@@ -56,7 +57,7 @@ class RegisterForm extends Form {
           </div>
           { this.renderButton('Confirm') }
         </form>
-      </div>
+      </AuthContainer>
     );
   }
 }

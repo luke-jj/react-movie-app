@@ -1,5 +1,6 @@
 import React from 'react';
 import Joi from 'joi-browser';
+import styled from 'styled-components';
 
 import Form from './common/form';
 import { getGenres } from '../services/genreService';
@@ -57,17 +58,13 @@ class MovieForm extends Form {
 
   getButtonName() {
     const id = this.props.match.params.id;
-
-    if (id === 'new') {
-      return 'Save';
-    }
+    if (id === 'new') return 'Save';
 
     return 'Update';
   }
 
   doSubmit = async () => {
     await saveMovie(this.state.data);
-
     this.props.history.push('/movies');
   }
 
@@ -75,7 +72,7 @@ class MovieForm extends Form {
     return (
       <div>
         <h2>{this.state.data.title}</h2>
-        <form onSubmit={this.handleSubmit} className="movie-form-container">
+        <StyledForm onSubmit={this.handleSubmit}>
           <fieldset disabled={!this.props.user || !this.props.user.isAdmin}>
             { this.renderInput('title', 'Title') }
             { this.renderSelect('genreId', 'Genre', this.state.genres) }
@@ -83,10 +80,14 @@ class MovieForm extends Form {
             { this.renderInput('dailyRentalRate', 'Rate') }
             { this.renderButton(this.getButtonName()) }
           </fieldset>
-        </form>
+        </StyledForm>
       </div>
     );
   }
 };
+
+const StyledForm = styled.form`
+  max-width: 380px;
+`;
 
 export default MovieForm;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
@@ -10,7 +10,6 @@ import Table from '../components/common/table';
 import Spinner from '../components/common/spinner';
 
 class Forum extends Component {
-
   state = {
     threads: [ { user: {}, lastReply: {}, } ],
     sortColumn: { order: 'asc', path: 'title' },
@@ -23,35 +22,34 @@ class Forum extends Component {
       key: 'title',
       label: 'Title',
       width: '200px',
-      content: thread => {
-        return (
-          <React.Fragment>
-            <Link
-              to={`/forum/${thread._id}`}
-            >
-              {thread.title}
-            </Link>
-            <br />
-            <small>by {thread.user.name}</small>
-          </React.Fragment>
-        );
-      }
+      content: thread => (
+        <Fragment>
+          <Link to={`/forum/${thread._id}`}>{thread.title}</Link>
+          <br />
+          <small>by {thread.user.name}</small>
+        </Fragment>
+      )
     },
     {
       path: 'lastReply',
       key: 'lastReply',
       label: 'Last Reply',
       width: '230px',
-      content: thread => {
-        return (
-          <React.Fragment>
-            <small>
-              {thread.lastReply.username ? `by ${thread.lastReply.username}` : '-'}<br/>
-              {thread.lastReply.date ? this.formatDate(thread.lastReply.date) : ''}
-            </small>
-          </React.Fragment>
-        );
-      }
+      content: thread => (
+        <small>
+          { thread.lastReply.username ? (
+            `by ${thread.lastReply.username}`
+          ) : (
+            '-'
+          )}
+          <br/>
+          { thread.lastReply.date ? (
+            this.formatDate(thread.lastReply.date)
+          ) : (
+            ''
+          )}
+        </small>
+      )
     },
     {
       key: 'repliesCount',
@@ -61,17 +59,15 @@ class Forum extends Component {
     },
     {
       key: 'delete',
-      content: thread => {
-        return (
-          <button
-            disabled={!this.props.user || !this.props.user.isAdmin}
-            className="btn btn-danger btn-sm"
-            onClick={() => this.handleDelete(thread)}
-          >
-            Delete
-          </button>
-        );
-      },
+      content: thread => (
+        <button
+          disabled={!this.props.user || !this.props.user.isAdmin}
+          className="btn btn-danger btn-sm"
+          onClick={() => this.handleDelete(thread)}
+        >
+          Delete
+        </button>
+      )
     }
   ];
 
@@ -104,45 +100,36 @@ class Forum extends Component {
     }
   };
 
-  handleSort = (sortColumn) => {
-    this.setState(state => {
-      return { sortColumn };
-    });
-  };
+  handleSort = (sortColumn) => this.setState(state => ({ sortColumn }));
 
   render() {
-    const { user } = this.props;
     return (
       <div>
         <ToastContainer />
         <div className="d-flex justify-content-between">
           <h2 className="mb-4">Forum</h2>
-          {
-            (user) && (
-              <Link to="/forum/new">
-                <button className="btn btn-primary mb-4">
-                  Create New Thread
-                </button>
-              </Link>
-            )
-          }
-          {
-            (!user) && (
-              <button className="btn btn-primary mb-4 disabled">
+          { this.props.user ? (
+            <Link to="/forum/new">
+              <button className="btn btn-primary mb-4">
                 Create New Thread
               </button>
-            )
-          }
+            </Link>
+          ) : (
+            <button className="btn btn-primary mb-4 disabled">
+              Create New Thread
+            </button>
+          )}
         </div>
-        { !this.state.loading &&
+        { this.state.loading ? (
+          <Spinner />
+        ) : (
           <Table
             sortColumn={this.state.sortColumn}
             columns={this.columns}
             data={this.state.threads}
             onSort={this.handleSort}
           />
-        }
-        { this.state.loading && <Spinner /> }
+        )}
       </div>
     );
   }

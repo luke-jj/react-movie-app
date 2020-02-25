@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
@@ -23,11 +23,7 @@ class Rentals extends Component {
     });
   }
 
-  handleSort = (sortColumn) => {
-    this.setState(state => {
-      return { sortColumn };
-    });
-  };
+  handleSort = (sortColumn) => this.setState(state => ({ sortColumn }));
 
   handleReturn = async (rental) => {
     const originalRentals = this.state.rentals;
@@ -72,32 +68,25 @@ class Rentals extends Component {
 
     const rentals = this.getSortedRentals();
 
-    if (loading) {
-      return <Spinner />;
-    }
+    if (loading) return <Spinner />;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <h2>Rentals</h2>
         <div>
           <p className="align-middle">
             {this.getOpenRentalsCount()} total open rentals.
-            {
-              (user && user.isAdmin) && (
-                <Link to="/rentals/new" className="float-right">
-                  <button className="btn btn-primary mb-4">
-                    New Rental
-                  </button>
-                </Link>
-              )
-            }
-            {
-              (!user || !user.isAdmin) && (
-                <button className="btn btn-primary mb-4 disabled float-right">
+            { (user && user.isAdmin) ? (
+              <Link to="/rentals/new" className="float-right">
+                <button className="btn btn-primary mb-4">
                   New Rental
                 </button>
-              )
-            }
+              </Link>
+            ) : (
+              <button className="btn btn-primary mb-4 disabled float-right">
+                New Rental
+              </button>
+            )}
           </p>
           <RentalTable
             user={user}
@@ -107,7 +96,7 @@ class Rentals extends Component {
             onSort={this.handleSort}
           />
         </div>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

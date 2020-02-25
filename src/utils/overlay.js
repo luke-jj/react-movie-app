@@ -1,11 +1,9 @@
-.overlay {
-    position:relative;
-}
-.overlay img {
-    width:100%;
-    vertical-align:top;
-}
-.overlay:after {
+import { css } from 'styled-components';
+
+const overlay = css`
+  position: relative;
+
+  &:after {
     content:'\A';
     position:absolute;
     width:100%; height:100%;
@@ -14,7 +12,11 @@
     opacity:0;
     transition: all 0.4s;
     -webkit-transition: all 0.4s;
-}
-.overlay:hover:after {
+  }
+
+  &:hover:after {
     opacity:1;
-}
+  }
+`;
+
+export default overlay;

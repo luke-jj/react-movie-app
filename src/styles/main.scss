@@ -1,30 +1,87 @@
 @import "_custom.scss";
 
 /*-------------------------------------------------------------------*/
-/* === Custom Styles === */
+/* === Boostrap Main SCSS === */
+/*-------------------------------------------------------------------*/
+@import "bootstrap/scss/_mixins";
+@import "bootstrap/scss/_root";
+@import "bootstrap/scss/_reboot";
+@import "bootstrap/scss/_type";
+@import "bootstrap/scss/_images";
+@import "bootstrap/scss/_code";
+@import "bootstrap/scss/_grid";
+@import "bootstrap/scss/_tables";
+@import "bootstrap/scss/_forms";
+@import "bootstrap/scss/_buttons";
+@import "bootstrap/scss/_transitions";
+@import "bootstrap/scss/_dropdown";
+@import "bootstrap/scss/_button-group";
+@import "bootstrap/scss/_input-group";
+@import "bootstrap/scss/_custom-forms";
+@import "bootstrap/scss/_nav";
+@import "bootstrap/scss/_navbar";
+@import "bootstrap/scss/_card";
+@import "bootstrap/scss/_breadcrumb";
+@import "bootstrap/scss/_pagination";
+@import "bootstrap/scss/_badge";
+@import "bootstrap/scss/_jumbotron";
+@import "bootstrap/scss/_alert";
+@import "bootstrap/scss/_progress";
+@import "bootstrap/scss/_media";
+@import "bootstrap/scss/_list-group";
+@import "bootstrap/scss/_close";
+@import "bootstrap/scss/_toasts";
+@import "bootstrap/scss/_modal";
+@import "bootstrap/scss/_tooltip";
+@import "bootstrap/scss/_popover";
+@import "bootstrap/scss/_carousel";
+@import "bootstrap/scss/_spinners";
+@import "bootstrap/scss/_utilities";
+@import "bootstrap/scss/_print";
+
+
+/*-------------------------------------------------------------------*/
+/* Bootstrap Class Overrides */
 /*-------------------------------------------------------------------*/
 
-main {
-  margin-top: 40px;
+.navbar {
+  background-color: $navbar-default-bg !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-.clickable {
-  cursor: pointer;
-}
+.list-group-item {
+  padding: 0;
 
-.form-container {
-  max-width: 280px;
-}
+  button {
+    padding: 15px 10px;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: inherit;
 
-.movie-form-container {
-  max-width: 380px;
-}
+    &:hover {
+      background-color: inherit;
+    }
 
-.cart-container {
-  max-width: 600px;
-}
+  }
 
-.thread-container, .review-container{
-  max-width: 800px;
-}
+  &.active {
+    z-index: 2; // Place active items above their siblings for proper border styling
+    color: $list-group-active-color;
+    background-color: $list-group-active-bg;
+    border-color: $list-group-active-border-color;
 
+    &:hover {
+      background-color: $list-group-active-bg;
+    }
+  }
+
+  &:hover {
+    background-color: $gray-100;
+  }
+}

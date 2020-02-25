@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 import { getMovies, deleteMovie } from '../services/movieService';
 import { getGenres } from '../services/genreService';
@@ -11,7 +12,6 @@ import Pagination from '../components/common/pagination';
 import GenreList from '../components/genrelist';
 import Spinner from '../components/common/spinner';
 import SearchBox from '../components/common/searchbox';
-import styles from './movies.module.scss';
 
 class Movies extends Component {
 
@@ -117,11 +117,7 @@ class Movies extends Component {
     });
   };
 
-  handleSort = (sortColumn) => {
-    this.setState(state => {
-      return { sortColumn };
-    });
-  };
+  handleSort = (sortColumn) => this.setState(state => ({ sortColumn }));
 
   handleSearch = query => {
     this.setState(state => {
@@ -190,7 +186,7 @@ class Movies extends Component {
           />
         </div>
         <div className="col-sm col-10-md">
-          <div className={styles.topbar}>
+          <Topbar>
             <span className="align-bottom">Showing {movies.length} of {totalCount} movies.</span>
 
             <div className="float-right">
@@ -201,7 +197,7 @@ class Movies extends Component {
                 onPageChange={this.handlePageChange}
               />
             </div>
-          </div>
+          </Topbar>
           <SearchBox text={searchText} onSearch={this.handleSearch} />
           <MoviesTable
             user={this.props.user}
@@ -219,8 +215,7 @@ class Movies extends Component {
                 currentPage={currentPage}
                 onPageChange={this.handlePageChange}
               />
-              {
-                (user && user.isAdmin) && (
+              { (user && user.isAdmin) && (
                   <Link to="/movies/new">
                     <button className="btn btn-primary mb-4">
                       New Movie
@@ -228,8 +223,7 @@ class Movies extends Component {
                   </Link>
                 )
               }
-              {
-                (!user || !user.isAdmin) && (
+              { (!user || !user.isAdmin) && (
                   <button className="btn btn-primary mb-4" disabled>
                     Add Movie
                   </button>
@@ -241,5 +235,9 @@ class Movies extends Component {
     );
   }
 }
+
+const Topbar = styled.div`
+  height: 35px;
+`;
 
 export default Movies;

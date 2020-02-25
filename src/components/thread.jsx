@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Joi from 'joi-browser';
+import styled from 'styled-components';
 
 import Spinner from './common/spinner';
 import { getThread, getPosts, createPost } from '../services/forumService';
@@ -92,7 +93,7 @@ class Thread extends Component {
     }
 
     return (
-      <div className="mx-auto mb-5 thread-container">
+      <ThreadWrapper>
         <div className="card mb-3">
           <div className="card-header">
             <h3>{thread.title}</h3>
@@ -120,7 +121,7 @@ class Thread extends Component {
             );
           })
         }
-        { this.props.user &&
+        { this.props.user ? (
           <form className="m-5" onSubmit={this.handleSubmit}>
             <fieldset disabled={submitting}>
               <div className="input-group">
@@ -144,8 +145,7 @@ class Thread extends Component {
               </div>
             </fieldset>
           </form>
-        }
-        { !this.props.user &&
+        ) : (
           <div className="text-center">
             <Link to="/login">
               <button className="btn btn-outline-primary ">
@@ -153,10 +153,15 @@ class Thread extends Component {
               </button>
             </Link>
           </div>
-        }
-      </div>
+        )}
+      </ThreadWrapper>
     );
   }
 }
+
+const ThreadWrapper = styled.div`
+  width: 800px;
+  margin: 70px auto 120px;
+`;
 
 export default Thread;

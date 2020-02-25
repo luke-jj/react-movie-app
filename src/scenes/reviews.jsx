@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getReviews } from '../services/reviewService';
 import Spinner from '../components/common/spinner';
+import styled from 'styled-components';
 
 class Reviews extends Component {
 
@@ -22,12 +23,10 @@ class Reviews extends Component {
   }
 
   render() {
-    if (this.state.loading) {
-      return <Spinner />;
-    }
+    if (this.state.loading) return <Spinner />;
 
     return (
-      <div className="review-container mx-auto">
+      <ReviewWrapper>
         <h2 className="mb-4">Latest Movie Reviews</h2>
         {
           this.state.reviews.map(review => {
@@ -41,16 +40,24 @@ class Reviews extends Component {
                   Genre: {review.movie.genre.name}
                 </div>
                 <div className="card-body">
-                  <h5 className="card-title">{review.title} <small>by {review.user.name}</small></h5>
+                  <h5 className="card-title">
+                    {review.title} <small>by {review.user.name}</small>
+                  </h5>
                   <p className="card-text">{review.text}</p>
                 </div>
               </div>
             );
           })
         }
-      </div>
+      </ReviewWrapper>
     );
   }
 }
+
+const ReviewWrapper = styled.div`
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+`;
 
 export default Reviews;

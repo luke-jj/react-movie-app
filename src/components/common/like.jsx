@@ -1,7 +1,9 @@
 import React from 'react';
 
 const Like = ({ liked, onClick }) => {
-  const classes = liked ? "fa fa-bookmark text-warning" : "fa fa-bookmark-o text-warning";
+  const classes = liked
+    ? "fa fa-bookmark text-warning"
+    : "fa fa-bookmark-o text-warning";
 
   return (
     <div>

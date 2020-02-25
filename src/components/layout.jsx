@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import styled from 'styled-components';
 import Header from './header';
 import Footer from './footer';
 
+const Main = styled.main`
+  margin-top: 40px;
+`;
+
 const Layout = ({ children, user, bookmarks, shoppingCart }) => {
   return (
-    <React.Fragment>
+    <Fragment>
       <Header
         user={user}
         bookmarks={bookmarks}
         shoppingCart={shoppingCart}
       />
-
-        <main className="container">
+        <Main className="container">
           { children }
-        </main>
-
+        </Main>
       <Footer />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

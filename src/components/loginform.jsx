@@ -4,6 +4,7 @@ import Joi from 'joi-browser';
 
 import auth from '../services/authService';
 import Form from './common/form';
+import AuthContainer from './authcontainer';
 
 class LoginForm extends Form {
 
@@ -40,7 +41,7 @@ class LoginForm extends Form {
     if (auth.getCurrentUser()) return <Redirect to="/" />;
 
     return (
-      <div className="form-container mx-auto">
+      <AuthContainer>
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
           { this.renderInput('username', 'Email') }
@@ -52,7 +53,7 @@ class LoginForm extends Form {
           </div>
           { this.renderButton('Login') }
         </form>
-      </div>
+      </AuthContainer>
     );
   }
 }
