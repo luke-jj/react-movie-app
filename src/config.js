@@ -1,7 +1,6 @@
 const config = {
   API_URL: process.env.REACT_APP_API_URL,
   SENTRY_DSN: process.env.REACT_APP_SENTRY_DSN,
-  FORUM: process.env.REACT_APP_FORUM || "https://jsonplaceholder.typicode.com/posts"
 };
 
 if (!config.API_URL) {
