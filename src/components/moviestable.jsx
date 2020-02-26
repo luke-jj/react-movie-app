@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import Table from './common/table';
-import MovieCard from './common/moviecard'
+import MovieCard from './moviecard'
 
 class MoviesTable extends Component {
 
@@ -12,7 +12,17 @@ class MoviesTable extends Component {
   };
 
   columns = [
-    { path: 'title', label: 'Title', content: (movie) => <MovieCard movie={movie} loading={movie.loading} onLike={this.props.onLike}/>},
+    {
+      path: 'title',
+      label: 'Title',
+      content: (movie) => (
+        <MovieCard
+          movie={movie}
+          loading={movie.loading}
+          onLike={this.props.onLike}
+        />
+      )
+    },
     { path: 'genre.name', label: 'Genre', width: '90px' },
     { path: 'year', label: 'Year', width: '70px' },
     { path: 'numberInStock', label: 'Stock', width: '70px' },
@@ -76,7 +86,7 @@ class MoviesTable extends Component {
         data-toggle="modal"
         data-target="#deleteModal"
         type="button"
-        onClick={() => this.setState({ selectedMovie: movie })}
+        onClick={() => this.setState(state => ({ selectedMovie: movie }))}
       >
         Delete
       </button>

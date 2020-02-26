@@ -1,15 +1,25 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Joi from 'joi-browser';
+import { toast } from 'react-toastify';
 
 import auth from '../services/authService';
+import AuthContainer from '../components/authcontainer';
 import Form from '../components/common/form';
-import { getCurrentUserDetails, deleteCurrentUser } from '../services/userService';
+import {
+  getCurrentUserDetails,
+  deleteCurrentUser
+} from '../services/userService';
 
 class Profile extends Form {
-
   state = {
-    data: { name: '', email: '', isAdmin: false, password: '', passwordRepeat: '' },
+    data: {
+      name: '',
+      email: '',
+      isAdmin: false,
+      password: '',
+      passwordRepeat: ''
+    },
     errors: {}
   };
 
@@ -24,13 +34,9 @@ class Profile extends Form {
   async componentDidMount() {
     const { data } = await getCurrentUserDetails();
 
-    this.setState(state => {
-      const prevData =  { ...state.data };
-
-      return {
-        data: Object.assign({}, prevData, data)
-      }
-    });
+    this.setState(state => ({
+      data: Object.assign({}, { ...state.data }, data)
+    }));
   }
 
   handleSubmit = () => {
@@ -44,6 +50,7 @@ class Profile extends Form {
       auth.logout();
       window.location = '/';
     } catch (ex) {
+      toast('Something went wrong or not authorized to delete this account.');
     }
   }
 
@@ -51,7 +58,7 @@ class Profile extends Form {
     if (!auth.getCurrentUser()) return <Redirect to="/" />;
 
     return (
-      <div className="form-container">
+      <AuthContainer>
         <h2>User Profile</h2>
         <form onSubmit={this.handleSubmit}>
           <fieldset disabled={!this.props.user.isAdmin}>
@@ -121,7 +128,7 @@ class Profile extends Form {
             </div>
           </div>
         </div>
-      </div>
+      </AuthContainer>
     );
   }
 };

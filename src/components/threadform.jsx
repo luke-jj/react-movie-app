@@ -2,6 +2,7 @@ import React from 'react';
 import Joi from 'joi-browser';
 
 import Form from './common/form';
+import { ThreadWrapper } from './thread';
 import { saveThread } from '../services/forumService';
 
 class ThreadForm extends Form {
@@ -27,15 +28,15 @@ class ThreadForm extends Form {
 
   render() {
     return (
-      <div className="mx-auto">
-        <form onSubmit={this.handleSubmit} className="thread-container mx-auto">
+      <ThreadWrapper>
+        <form onSubmit={this.handleSubmit}>
           <fieldset disabled={this.state.submitting}>
             { this.renderInput('title', 'Title') }
             { this.renderTextarea('text', 'Text', 8) }
             { this.renderButton('Create Thread') }
           </fieldset>
         </form>
-      </div>
+      </ThreadWrapper>
     );
   }
 };

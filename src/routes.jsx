@@ -6,10 +6,12 @@ import LoginForm from './components/loginform';
 import RegisterForm from './components/registerform';
 import NotFound from './components/notfound';
 
+import Home from './scenes/home';
 import Forum from './scenes/forum';
 import Thread from './components/thread';
 import ThreadForm from './components/threadform';
 import Movies from './scenes/movies';
+import MovieDetail from './scenes/moviedetail';
 import MovieForm from './components/movieform';
 import Reviews from './scenes/reviews';
 import Customers from './scenes/customers';
@@ -66,6 +68,10 @@ const Routes = ({
     />
     <Route
       path="/movies/:id"
+      render={props => <MovieDetail {...props} user={user} />}
+    />
+    <Route
+      path="/movies/:id/edit"
       render={props => <MovieForm {...props} user={user} />}
     />
     <Route
@@ -158,7 +164,7 @@ const Routes = ({
         );
       }}
     />
-    <Redirect from="/" exact to="/movies" />
+    <Route path="/" exact component={Home} />
     <Route path="/not-found" component={NotFound} />
     <Redirect to="/not-found" />
   </Switch>

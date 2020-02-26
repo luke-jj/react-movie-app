@@ -97,7 +97,9 @@ class Thread extends Component {
         <div className="card mb-3">
           <div className="card-header">
             <h3>{thread.title}</h3>
-            <small>by {thread.user.name} - {this.formatDate(thread.date)}</small>
+            <small>
+              by {thread.user.name} - {this.formatDate(thread.date)}
+            </small>
           </div>
           <div className="card-body">
             <p className="card-text">{thread.text}</p>
@@ -110,7 +112,9 @@ class Thread extends Component {
             return (
               <div className="card mb-3" key={post._id}>
                 <div className="card-header">
-                  <small>by {post.user.name} - {this.formatDate(post.date)}</small>
+                  <small>
+                    by {post.user.name} - {this.formatDate(post.date)}
+                  </small>
                 </div>
                 <div className="card-body">
                   <div className="card-text">
@@ -135,9 +139,11 @@ class Thread extends Component {
                   aria-label="Text">
                 </textarea>
               </div>
-                <div>
-                  { errors.text && <div className="alert alert-danger">{errors.text}</div> }
-                </div>
+              <div>
+                { errors.text &&
+                  <div className="alert alert-danger">{errors.text}</div>
+                }
+              </div>
               <div className="m-3">
                 <button
                   type="submit"
@@ -159,7 +165,7 @@ class Thread extends Component {
   }
 }
 
-const ThreadWrapper = styled.div`
+export const ThreadWrapper = styled.div`
   width: 800px;
   margin: 70px auto 120px;
 `;

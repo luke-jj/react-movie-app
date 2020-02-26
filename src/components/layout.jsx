@@ -7,20 +7,18 @@ const Main = styled.main`
   margin-top: 40px;
 `;
 
-const Layout = ({ children, user, bookmarks, shoppingCart }) => {
-  return (
-    <Fragment>
-      <Header
-        user={user}
-        bookmarks={bookmarks}
-        shoppingCart={shoppingCart}
-      />
-        <Main className="container">
-          { children }
-        </Main>
-      <Footer />
-    </Fragment>
-  );
-};
+const Layout = ({ children, user, bookmarks, shoppingCart }) => (
+  <Fragment>
+    <Header
+      user={user}
+      bookmarks={bookmarks}
+      shoppingCart={shoppingCart}
+    />
+      <Main className="container">
+        { children }
+      </Main>
+    <Footer />
+  </Fragment>
+);
 
 export default Layout;

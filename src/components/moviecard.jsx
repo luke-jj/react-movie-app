@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Like from './like';
-import Star from './star';
+import Like from './common/like';
+import Star from './common/star';
 import PosterLink from './posterlink';
 
 const Card = styled.div`

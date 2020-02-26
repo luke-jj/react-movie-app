@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Poster from './poster';
-import overlay from '../../utils/overlay';
+import overlay from '../utils/overlay';
 
 const StyledLink = styled(Link)`
   display: block;
@@ -15,16 +15,14 @@ const StyledLink = styled(Link)`
   ${overlay}
 `;
 
-const PosterLink = ({ movie, height, width }) => {
-  return (
-    <StyledLink to={`/movies/${movie._id}`}>
-      <Poster
-        height={height}
-        width={width}
-        movie={movie}
-      />
-    </StyledLink>
-  );
-};
+const PosterLink = ({ movie, height, width }) => (
+  <StyledLink to={`/movies/${movie._id}`}>
+    <Poster
+      height={height}
+      width={width}
+      movie={movie}
+    />
+  </StyledLink>
+);
 
 export default PosterLink;

@@ -57,9 +57,7 @@ class Movies extends Component {
     if (bookmarks !== prevProps.bookmarks) {
       const movies = _.cloneDeep(this.state.movies);
       this.injectBookmarksIntoMovies(movies, bookmarks);
-      this.setState(state => {
-        return { movies };
-      });
+      this.setState(state => ({ movies }));
     }
   }
 
@@ -80,9 +78,9 @@ class Movies extends Component {
   handleDelete = async movie => {
     const originalMovies = this.state.movies;
 
-    this.setState(state => {
-      return { movies: state.movies.filter(m => m._id !== movie._id) };
-    });
+    this.setState(state => ({
+      movies: state.movies.filter(m => m._id !== movie._id)
+    }));
 
     try {
       await deleteMovie(movie._id);
@@ -91,16 +89,12 @@ class Movies extends Component {
         toast.error('Movies has already been deleted');
       }
 
-      this.setState(state => {
-        return { movies: originalMovies };
-      });
+      this.setState(state => ({ movies: originalMovies }));
     }
   };
 
   handlePageChange = (page) => {
-    this.setState(state => {
-      return { currentPage: page };
-    });
+    this.setState(state => ({ currentPage: page }));
   };
 
   handleGenreSelect = (genre) => {
@@ -120,13 +114,11 @@ class Movies extends Component {
   handleSort = (sortColumn) => this.setState(state => ({ sortColumn }));
 
   handleSearch = query => {
-    this.setState(state => {
-      return {
-        searchText: query,
-        selectedGenre: { ...state.genres[0] },
-        currentPage: 1
-      };
-    });
+    this.setState(state => ({
+      searchText: query,
+      selectedGenre: { ...state.genres[0] },
+      currentPage: 1
+    }));
   };
 
   getPagedData = () => {
@@ -187,8 +179,9 @@ class Movies extends Component {
         </div>
         <div className="col-sm col-10-md">
           <Topbar>
-            <span className="align-bottom">Showing {movies.length} of {totalCount} movies.</span>
-
+            <span className="align-bottom">
+              Showing {movies.length} of {totalCount} movies.
+            </span>
             <div className="float-right">
               <Pagination
                 itemsCount={totalCount}
@@ -215,15 +208,13 @@ class Movies extends Component {
                 currentPage={currentPage}
                 onPageChange={this.handlePageChange}
               />
-              { (user && user.isAdmin) && (
+              { (user && user.isAdmin) ? (
                   <Link to="/movies/new">
                     <button className="btn btn-primary mb-4">
                       New Movie
                     </button>
                   </Link>
-                )
-              }
-              { (!user || !user.isAdmin) && (
+                ) : (
                   <button className="btn btn-primary mb-4" disabled>
                     Add Movie
                   </button>

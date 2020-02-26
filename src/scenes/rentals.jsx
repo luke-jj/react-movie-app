@@ -28,26 +28,22 @@ class Rentals extends Component {
   handleReturn = async (rental) => {
     const originalRentals = this.state.rentals;
 
-    this.setState(state => {
-      return { rentals: state.rentals.filter(r => r._id !== rental._id) };
-    });
+    this.setState(state => ({
+      rentals: state.rentals.filter(r => r._id !== rental._id)
+    }));
 
     try {
       const { data } = await returnRental(rental);
 
-      this.setState(state => {
-        const rentals = _.cloneDeep(state.rentals)
-        rentals.push(data);
-        return { rentals };
-      });
+      this.setState(state => ({
+        rentals: _.cloneDeep(state.rentals).push(data)
+      }));
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         toast.error('Rental already processed.');
       }
 
-      this.setState(state => {
-        return { originalRentals };
-      });
+      this.setState(state => ({ originalRentals }));
     }
   };
 

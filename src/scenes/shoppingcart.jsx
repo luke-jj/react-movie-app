@@ -11,7 +11,13 @@ class ShoppingCart extends Component {
   }
 
   columns = [
-    { path: 'title', label: 'Item', content: (movie) => <Link to={`/movies/${movie._id}`}>{movie.title}</Link>},
+    {
+      path: 'title',
+      label: 'Item',
+      content: (movie) => (
+        <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+      )
+    },
     { path: 'dailyRentalRate', label: 'Price'},
     { key: 'count', label: 'Amount', content: (movie) => (
       <div>
@@ -47,41 +53,32 @@ class ShoppingCart extends Component {
 
   handleSort = (sortColumn) => this.setState(state => ({ sortColumn }));
 
-  formatCount(movie) {
-    return movie.amount === 0 ? 'Zero' : movie.amount;
-  }
+  formatCount = movie => movie.amount === 0 ? 'Zero' : movie.amount;
 
-  getBadgeClasses(movie) {
-    let classes = 'badge badge-';
-    classes += movie.amount === 0 ? 'warning' : 'primary';
+  getBadgeClasses = movie => (
+    `badge badge-${movie.amount === 0 ? 'warning' : 'primary'}`
+  );
 
-    return classes;
-  }
+  getDisabledStatus = () => !this.props.items.length;
 
-  getDisabledStatus() {
-    return !this.props.items.length;
-  }
+  getDisabledIncrementStatus = movie => movie.amount < 1;
 
-  getDisabledIncrementStatus(movie) {
-    return movie.amount < 1;
-  }
-
-  getTotalPrice() {
+  getTotalPrice = () => {
     return this.props.items.reduce((acc, cur) => (
       acc + ( cur.amount * cur.dailyRentalRate )
     ),0);
-  }
+  };
 
-  getTotalItems() {
+  getTotalItems = () => {
     return this.props.items.reduce((acc, cur) => acc + cur.amount, 0);
-  }
+  };
 
-  getCheckoutSummary() {
+  getCheckoutSummary = () => {
     const totalItems = this.getTotalItems();
     const totalPrice = this.getTotalPrice();
 
     return `${totalItems} ${totalItems === 1 ? 'item' : 'items'} for a total of ${this.getTotalPrice()} Galactic ${totalPrice === 1 ? 'Credit' : 'Credits'}.`;
-  }
+  };
 
   render() {
     const { sortColumn } = this.state;

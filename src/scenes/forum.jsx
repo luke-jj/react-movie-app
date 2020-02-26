@@ -71,23 +71,19 @@ class Forum extends Component {
     }
   ];
 
-  formatDate(date) {
-    return moment(date).format("dddd, MMMM Do YYYY, h:mm a");
-  }
+  formatDate = date => moment(date).format("dddd, MMMM Do YYYY, h:mm a");
 
   async componentDidMount() {
     const { data: threads } = await forumService.getThreads();
-    this.setState({ threads, loading: false });
+    this.setState(state => ({ threads, loading: false }));
   }
 
   handleDelete = async thread => {
     const originalThreads = this.state.threads;
 
-    this.setState(state => {
-      const threads = this.state.threads.filter(t => t._id !== thread._id);
-
-      return { threads };
-    });
+    this.setState(state => ({
+      threads: this.state.threads.filter(t => t._id !== thread._id)
+    }));
 
     try {
       await forumService.deleteThread(thread._id);
@@ -96,7 +92,7 @@ class Forum extends Component {
         toast.error('This thread does not exist or has already been deleted.');
       }
 
-      this.setState({ threads: originalThreads });
+      this.setState(state => ({ threads: originalThreads }));
     }
   };
 
@@ -104,7 +100,7 @@ class Forum extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <ToastContainer />
         <div className="d-flex justify-content-between">
           <h2 className="mb-4">Forum</h2>
@@ -130,7 +126,7 @@ class Forum extends Component {
             onSort={this.handleSort}
           />
         )}
-      </div>
+      </>
     );
   }
 }

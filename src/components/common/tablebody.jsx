@@ -10,29 +10,22 @@ class TableBody extends Component {
     return _.get(item, column.path);
   };
 
-  createKey = (item, column) => {
-    return item._id + (column.path || column.key);
-  };
+  createKey = (item, column) => item._id + (column.path || column.key);
 
   render() {
     const { data, columns } = this.props;
 
     return (
       <tbody>
-
-        {
-          data.map(item => (
-            <tr key={item._id}>
-              {
-                columns.map(col => (
-                  <td className="align-middle" key={this.createKey(item, col)}>
-                    {this.renderCell(item, col)}
-                  </td>
-                ))
-              }
-            </tr>
-          ))
-        }
+        { data.map(item => (
+          <tr key={item._id}>
+            { columns.map(col => (
+              <td className="align-middle" key={this.createKey(item, col)}>
+                {this.renderCell(item, col)}
+              </td>
+            ))}
+          </tr>
+        ))}
       </tbody>
     );
   }

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
@@ -8,7 +8,6 @@ import CustomerTable from '../components/customertable';
 import { getCustomers, deleteCustomer } from '../services/customerService';
 
 class Customers extends Component {
-
   state = {
     customers: [],
     sortColumn: { path: 'name', order: 'asc' },
@@ -27,9 +26,9 @@ class Customers extends Component {
   handleDelete = async (customer) => {
     const originalCustomers = this.state.customers;
 
-    this.setState(state => {
-      return { customers: state.customers.filter(c => c._id !== customer._id) };
-    });
+    this.setState(state => ({
+      customers: state.customers.filter(c => c._id !== customer._id)
+    }));
 
     try {
       await deleteCustomer(customer._id);
@@ -38,9 +37,7 @@ class Customers extends Component {
         toast.error('Customer has already been deleted');
       }
 
-      this.setState(state => {
-        return { customers: originalCustomers };
-      });
+      this.setState(state => ({ customers: originalCustomers }));
     }
   };
 
@@ -56,12 +53,10 @@ class Customers extends Component {
     const { sortColumn, loading } = this.state;
     const customers = this.getSortedCustomers();
 
-    if (loading) {
-      return <Spinner />;
-    }
+    if (loading) return <Spinner />;
 
     return (
-      <Fragment>
+      <>
         <h2>Customers</h2>
         <div className="col">
           <p className="align-middle">
@@ -89,7 +84,7 @@ class Customers extends Component {
             onSort={this.handleSort}
           />
         </div>
-      </Fragment>
+      </>
     );
   }
 }

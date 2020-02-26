@@ -7,9 +7,13 @@ import { getGenres } from '../services/genreService';
 import { getMovie, saveMovie } from '../services/movieService';
 
 class MovieForm extends Form {
-
   state = {
-    data: { title: '\u00a0', genreId: '', numberInStock: '', dailyRentalRate: '' },
+    data: {
+      title: '\u00a0',
+      genreId: '',
+      numberInStock: '',
+      dailyRentalRate: ''
+    },
     genres: [],
     errors: {}
   };
@@ -18,8 +22,13 @@ class MovieForm extends Form {
     _id: Joi.string(),
     title: Joi.string().required().label('Title'),
     genreId: Joi.string().label('Genre'),
-    numberInStock: Joi.number().min(0).max(100).required().label('Number in Stock'),
     dailyRentalRate: Joi.number().min(0).max(10).required().label('Rate'),
+    numberInStock: Joi
+      .number()
+      .min(0)
+      .max(100)
+      .required()
+      .label('Number in Stock'),
   };
 
   async componentDidMount() {
@@ -36,7 +45,6 @@ class MovieForm extends Form {
     try {
       const id = this.props.match.params.id;
       if (id === 'new') return;
-
       const { data: movie } = await getMovie(id);
       this.setState(state => { return { data: this.mapToViewModel(movie) } });
     } catch (ex) {
@@ -70,7 +78,7 @@ class MovieForm extends Form {
 
   render() {
     return (
-      <div>
+      <>
         <h2>{this.state.data.title}</h2>
         <StyledForm onSubmit={this.handleSubmit}>
           <fieldset disabled={!this.props.user || !this.props.user.isAdmin}>
@@ -81,7 +89,7 @@ class MovieForm extends Form {
             { this.renderButton(this.getButtonName()) }
           </fieldset>
         </StyledForm>
-      </div>
+      </>
     );
   }
 };

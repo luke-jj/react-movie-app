@@ -3,6 +3,7 @@
 /*-------------------------------------------------------------------*/
 /* === Boostrap Main SCSS === */
 /*-------------------------------------------------------------------*/
+
 @import "bootstrap/scss/_mixins";
 @import "bootstrap/scss/_root";
 @import "bootstrap/scss/_reboot";
@@ -71,7 +72,7 @@
   }
 
   &.active {
-    z-index: 2; // Place active items above their siblings for proper border styling
+    z-index: 2;
     color: $list-group-active-color;
     background-color: $list-group-active-bg;
     border-color: $list-group-active-border-color;

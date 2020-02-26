@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Table from './common/table';
 
 class CustomerTable extends Component {
-
   columns = [
     { path: 'name', label: 'Name', width: '150px'},
     { path: 'phone', label: 'Phone', width: '150px'},

@@ -1,6 +1,6 @@
 import React from 'react';
-import ListGroup from './common/listgroup';
 import styled from 'styled-components';
+import ListGroup from './common/listgroup';
 
 const GenreListContainer = styled.div`
   max-width: 100px;
@@ -18,16 +18,14 @@ const GenreListContainer = styled.div`
   }
 `;
 
-const GenreList = ({genres, selectedGenre, onGenreSelect}) => {
-  return (
-    <GenreListContainer>
-      <ListGroup
-        items={genres}
-        selectedItem={selectedGenre}
-        onItemSelect={onGenreSelect}
-      />
-    </GenreListContainer>
-  );
-};
+const GenreList = ({genres, selectedGenre, onGenreSelect}) => (
+  <GenreListContainer>
+    <ListGroup
+      items={genres}
+      selectedItem={selectedGenre}
+      onItemSelect={onGenreSelect}
+    />
+  </GenreListContainer>
+);
 
 export default GenreList;

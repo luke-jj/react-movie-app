@@ -1,6 +1,7 @@
 /* === Import Bootstrap functions and variables === */
 @import "bootstrap/scss/_functions";
 @import "bootstrap/scss/_variables";
+
 /*-------------------------------------------------------------------*/
 /* Bootstrap Variable Overrides */
 /*-------------------------------------------------------------------*/
@@ -16,33 +17,19 @@ $theme-colors: (
 );
 
 // Body
-//
-// Settings for the `<body>` element.
 $body-bg: rgb(228,226,221);
 $body-color: $gray-800;
 
 // Links
-//
-// Style anchor elements.
 $link-color:                              theme-color("primary");
 $link-decoration:                         none;
 $link-hover-color:                        lighten($link-color, 10%);
 $link-hover-decoration:                   underline;
-// Darken percentage for links with `.text-*` class (e.g. `.text-success`)
-$emphasized-link-hover-darken-percentage: 15%;
 
 // Typography
-//
-// Font, line-height, and color for body text, headings, and more.
 $font-size-base: 0.8125rem; // Assumes the browser default, typically `16px`
 
-$font-family-sans-serif:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
-$font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
-$font-family-base:            $font-family-sans-serif !default;
-
 // Grid containers
-//
-// Define the maximum width of `.container` for different screen sizes.
 $container-max-widths: (
   sm: 640px,
   md: 760px,
@@ -52,11 +39,7 @@ $container-max-widths: (
 
 @include _assert-ascending($container-max-widths, "$container-max-widths");
 
-
-
-
 // Navbar
-//
 $navbar-default-bg: rgba(17, 17, 17, .96);
 $navbar-dark-toggler-border-color:  rgba(0,0,0,0);
 
@@ -66,30 +49,8 @@ $list-group-active-bg:              theme-color("warning");
 $list-group-active-border-color:    rgba(0,0,0,0);
 
 // Pagination
-$pagination-padding-y:              .5rem !default;
-$pagination-padding-x:              .75rem !default;
-$pagination-padding-y-sm:           .25rem !default;
-$pagination-padding-x-sm:           .5rem !default;
-$pagination-padding-y-lg:           .75rem !default;
-$pagination-padding-x-lg:           1.5rem !default;
-$pagination-line-height:            1.25 !default;
-
-$pagination-color:                  $gray-700;
-$pagination-bg:                     $white !default;
-$pagination-border-width:           $border-width !default;
-$pagination-border-color:           $gray-300 !default;
-
-$pagination-focus-box-shadow:       $input-btn-focus-box-shadow !default;
-$pagination-focus-outline:          0 !default;
-
 $pagination-hover-color:            $gray-800;
-$pagination-hover-bg:               $gray-200 !default;
-$pagination-hover-border-color:     $gray-300 !default;
 
 $pagination-active-color:           black;
 $pagination-active-bg:              theme-color("warning");
 $pagination-active-border-color:    rgba(0,0,0,0);
-
-$pagination-disabled-color:         $gray-600 !default;
-$pagination-disabled-bg:            $white !default;
-$pagination-disabled-border-color:  $gray-300 !default;
