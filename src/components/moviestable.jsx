@@ -24,7 +24,7 @@ class MoviesTable extends Component {
       )
     },
     { path: 'genre.name', label: 'Genre', width: '90px' },
-    { key: 'releaseDate', label: 'Year', width: '70px', content: (movie) => (
+    { path: 'releaseDate', label: 'Year', width: '70px', content: (movie) => (
       <div> {movie.releaseDate.substr(0, 4)}</div>
     )},
     { path: 'numberInStock', label: 'Stock', width: '70px' },
