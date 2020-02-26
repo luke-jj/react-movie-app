@@ -49,8 +49,8 @@ class TableHeader extends Component {
 }
 
 const Th = styled.th`
-  minWidth: ${({ minWidth }) => minWidth ? minWidth : '50px'};
-  maxWidth: '900px';
+  min-width: ${({ minWidth }) => minWidth ? minWidth : '50px'};
+  max-width: '900px';
 
   &:hover {
     cursor: pointer;
