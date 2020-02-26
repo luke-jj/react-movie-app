@@ -20,7 +20,7 @@ class Reviews extends Component {
     if (this.state.loading) return <Spinner />;
 
     return (
-      <ReviewWrapper>
+      <ReviewWrapper className="container pt-5">
         <h2 className="mb-4">Latest Movie Reviews</h2>
         { this.state.reviews.map(review => (
           <div className="card mb-3" key={review._id}>

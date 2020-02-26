@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
@@ -67,7 +67,7 @@ class Rentals extends Component {
     if (loading) return <Spinner />;
 
     return (
-      <Fragment>
+      <div className="container pt-5">
         <h2>Rentals</h2>
         <div>
           <p className="align-middle">
@@ -92,7 +92,7 @@ class Rentals extends Component {
             onSort={this.handleSort}
           />
         </div>
-      </Fragment>
+      </div>
     );
   }
 }

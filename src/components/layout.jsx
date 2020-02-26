@@ -4,7 +4,6 @@ import Header from './header';
 import Footer from './footer';
 
 const Main = styled.main`
-  margin-top: 40px;
 `;
 
 const Layout = ({ children, user, bookmarks, shoppingCart }) => (
@@ -14,7 +13,7 @@ const Layout = ({ children, user, bookmarks, shoppingCart }) => (
       bookmarks={bookmarks}
       shoppingCart={shoppingCart}
     />
-      <Main className="container">
+      <Main>
         { children }
       </Main>
     <Footer />

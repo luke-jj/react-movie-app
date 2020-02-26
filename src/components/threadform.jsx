@@ -28,7 +28,7 @@ class ThreadForm extends Form {
 
   render() {
     return (
-      <ThreadWrapper>
+      <ThreadWrapper className="container pt-5">
         <form onSubmit={this.handleSubmit}>
           <fieldset disabled={this.state.submitting}>
             { this.renderInput('title', 'Title') }

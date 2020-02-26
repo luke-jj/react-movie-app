@@ -4,9 +4,6 @@ import Overdrive from 'react-overdrive';
 import Poster from '../components/poster';
 import { getMovie } from '../services/movieService';
 
-const POSTER_PATH = 'http://image.tmdb.org/t/p/w154';
-const BACKDROP_PATH = 'http://image.tmdb.org/t/p/w1280';
-
 class MovieDetail extends Component {
   state = {
     movie: {},
@@ -27,15 +24,18 @@ class MovieDetail extends Component {
     const { movie } = this.state;
 
     return (
-      <MovieWrapper backdrop={`${BACKDROP_PATH}${movie.backdrop_path}`}>
+      <MovieWrapper
+        backdrop={movie.backdropPath ? `http://image.tmdb.org/t/p/w1280${movie.backdropPath}` : ''}
+      >
         <MovieInfo>
           <Overdrive id={`${movie._id}`}>
-            <Poster src={movie} />
+            <Poster movie={movie} shadow />
           </Overdrive>
           <div>
             <h1>{movie.title}</h1>
-            <h3>{movie.release_date}</h3>
-            <p>{movie.overview}</p>
+            <h3>{movie.releaseDate}</h3>
+            <p>{movie.description}</p>
+            <p>{movie.rating}</p>
           </div>
         </MovieInfo>
       </MovieWrapper>
@@ -53,7 +53,8 @@ const MovieWrapper = styled.div`
 `;
 
 const MovieInfo = styled.div`
-  background: white;
+  height: 100%;
+  background: rgb(228,226,221);
   text-align: left;
   padding: 2rem 10%;
   display: flex;

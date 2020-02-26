@@ -78,7 +78,7 @@ class MovieForm extends Form {
 
   render() {
     return (
-      <>
+      <div className="container pt-5">
         <h2>{this.state.data.title}</h2>
         <StyledForm onSubmit={this.handleSubmit}>
           <fieldset disabled={!this.props.user || !this.props.user.isAdmin}>
@@ -89,7 +89,7 @@ class MovieForm extends Form {
             { this.renderButton(this.getButtonName()) }
           </fieldset>
         </StyledForm>
-      </>
+      </div>
     );
   }
 };

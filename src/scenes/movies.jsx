@@ -169,57 +169,59 @@ class Movies extends Component {
     }
 
     return (
-      <div className="row">
-        <div className="col-2-md d-none d-md-block mr-2">
-          <GenreList
-            genres={genres}
-            selectedGenre={selectedGenre}
-            onGenreSelect={this.handleGenreSelect}
-          />
-        </div>
-        <div className="col-sm col-10-md">
-          <Topbar>
-            <span className="align-bottom">
-              Showing {movies.length} of {totalCount} movies.
-            </span>
-            <div className="float-right">
-              <Pagination
-                itemsCount={totalCount}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={this.handlePageChange}
-              />
-            </div>
-          </Topbar>
-          <SearchBox text={searchText} onSearch={this.handleSearch} />
-          <MoviesTable
-            user={this.props.user}
-            movies={movies}
-            sortColumn={sortColumn}
-            onLike={onLike}
-            onDelete={this.handleDelete}
-            onSort={this.handleSort}
-            onAddToCart={onAddToCart}
-          />
-          <div className="d-flex justify-content-between">
-              <Pagination
-                itemsCount={totalCount}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={this.handlePageChange}
-              />
-              { (user && user.isAdmin) ? (
-                  <Link to="/movies/new">
-                    <button className="btn btn-primary mb-4">
-                      New Movie
+      <div className="container pt-5">
+        <div className="row">
+          <div className="col-2-md d-none d-md-block mr-2">
+            <GenreList
+              genres={genres}
+              selectedGenre={selectedGenre}
+              onGenreSelect={this.handleGenreSelect}
+            />
+          </div>
+          <div className="col-sm col-10-md">
+            <Topbar>
+              <span className="align-bottom">
+                Showing {movies.length} of {totalCount} movies.
+              </span>
+              <div className="float-right">
+                <Pagination
+                  itemsCount={totalCount}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageChange={this.handlePageChange}
+                />
+              </div>
+            </Topbar>
+            <SearchBox text={searchText} onSearch={this.handleSearch} />
+            <MoviesTable
+              user={this.props.user}
+              movies={movies}
+              sortColumn={sortColumn}
+              onLike={onLike}
+              onDelete={this.handleDelete}
+              onSort={this.handleSort}
+              onAddToCart={onAddToCart}
+            />
+            <div className="d-flex justify-content-between">
+                <Pagination
+                  itemsCount={totalCount}
+                  pageSize={pageSize}
+                  currentPage={currentPage}
+                  onPageChange={this.handlePageChange}
+                />
+                { (user && user.isAdmin) ? (
+                    <Link to="/movies/new">
+                      <button className="btn btn-primary mb-4">
+                        New Movie
+                      </button>
+                    </Link>
+                  ) : (
+                    <button className="btn btn-primary mb-4" disabled>
+                      Add Movie
                     </button>
-                  </Link>
-                ) : (
-                  <button className="btn btn-primary mb-4" disabled>
-                    Add Movie
-                  </button>
-                )
-              }
+                  )
+                }
+            </div>
           </div>
         </div>
       </div>

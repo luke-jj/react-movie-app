@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import Overdrive from 'react-overdrive';
 import { getMovies } from '../services/movieService';
 import PosterLink from '../components/posterlink';
 
@@ -20,27 +21,33 @@ class Home extends PureComponent {
 
   render() {
     return (
-      <MovieGrid>
-        {this.state.movies.map(movie => (
-          <PosterWrapper key={movie._id}>
-            <PosterLink movie={movie}/>
-          </PosterWrapper>
-        ))}
-      </MovieGrid>
+      <Container className="container">
+        <h3 className="mb-4">Popular Today</h3>
+        <MovieGrid>
+          {this.state.movies.map(movie => (
+            <Overdrive key={movie._id} id={movie._id}>
+              <PosterLink movie={movie} width="100%" height="231px" shadow />
+            </Overdrive>
+          ))}
+        </MovieGrid>
+      </Container>
     );
   }
 }
 
-const PosterWrapper = styled.div`
-  box-shadow: 0 0 35px black;
+const Container = styled.div`
+  color: white;
+  height: 100%;
+  padding: 1rem;
+  background: #222;
+  padding-top: 40px;
 `;
 
 const MovieGrid = styled.div`
-  background: #222;
   display: grid;
-  padding: 1rem;
   grid-template-columns: repeat(6, 1fr);
   grid-row-gap: 1rem;
+  grid-column-gap: 1.25rem;
 `;
 
 export default Home;

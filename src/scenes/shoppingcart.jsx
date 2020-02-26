@@ -87,7 +87,7 @@ class ShoppingCart extends Component {
     const sorted = _.orderBy(items, [sortColumn.path], [sortColumn.order]);
 
     return (
-      <CartWrapper>
+      <CartWrapper className="container pt-5">
         <h2>Shopping Basket</h2>
         <button
           disabled={this.getDisabledStatus()}

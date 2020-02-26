@@ -44,7 +44,7 @@ class RegisterForm extends Form {
 
   render() {
     return (
-      <AuthContainer>
+      <AuthContainer className="container pt-5">
         <h1>Sign Up</h1>
         <form onSubmit={this.handleSubmit}>
           { this.renderInput('username', 'Email') }

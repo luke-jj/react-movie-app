@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
 class TableHeader extends Component {
 
@@ -32,28 +33,28 @@ class TableHeader extends Component {
     return (
       <thead>
         <tr>
-          {
-            this.props.columns.map(column => {
-              return (
-                <th
-                  style={{
-                    minWidth: column.width || '50px',
-                    maxWidth: '900px'
-                  }}
-
-                  key={column.path || column.key}
-                  className="clickable"
-                  onClick={() => this.raiseSort(column.path)}
-                >
-                  {column.label} {this.renderSortIcon(column)}
-                </th>
-              );
-            })
-          }
+          { this.props.columns.map(column => (
+            <Th
+              minWidth={column.width}
+              key={column.path || column.key}
+              onClick={() => this.raiseSort(column.path)}
+            >
+              {column.label} {this.renderSortIcon(column)}
+            </Th>
+          ))}
         </tr>
       </thead>
     );
   }
-};
+}
+
+const Th = styled.th`
+  minWidth: ${({ minWidth }) => minWidth ? minWidth : '50px'};
+  maxWidth: '900px';
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export default TableHeader;

@@ -100,7 +100,7 @@ class Forum extends Component {
 
   render() {
     return (
-      <>
+      <div className="container pt-5">
         <ToastContainer />
         <div className="d-flex justify-content-between">
           <h2 className="mb-4">Forum</h2>
@@ -126,7 +126,7 @@ class Forum extends Component {
             onSort={this.handleSort}
           />
         )}
-      </>
+      </div>
     );
   }
 }

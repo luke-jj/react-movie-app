@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Bookmarks = ({ bookmarks }) => (
-  <div>
+  <div className="container pt-5">
     <h2>Watchlist</h2>
     <ul>
     {

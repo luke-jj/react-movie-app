@@ -24,29 +24,29 @@ class MoviesTable extends Component {
       )
     },
     { path: 'genre.name', label: 'Genre', width: '90px' },
-    { path: 'year', label: 'Year', width: '70px' },
+    { key: 'releaseDate', label: 'Year', width: '70px', content: (movie) => (
+      <div> {movie.releaseDate.substr(0, 4)}</div>
+    )},
     { path: 'numberInStock', label: 'Stock', width: '70px' },
     { path: 'dailyRentalRate', label: 'Rate', width: '70px' },
-    { key: 'modify', width: '130px', content: (movie) => {
-      return (
-        <div className="d-flex flex-column align-items-center">
-          <div className="mb-2">
-          { this.renderCartButton(movie) }
-          </div>
-          { /*
-          <div className="mb-1">
-          { this.renderEditButton(movie) }
-          </div>
-          <div className="mb-1">
-          { this.renderDeleteButton(movie) }
-          </div>
-          */ }
-          <div>
-          { this.renderReviewButton(movie) }
-          </div>
+    { key: 'modify', width: '130px', content: (movie) => (
+      <div className="d-flex flex-column align-items-center">
+        <div className="mb-2">
+        { this.renderCartButton(movie) }
         </div>
-      );
-    }},
+        { /*
+        <div className="mb-1">
+        { this.renderEditButton(movie) }
+        </div>
+        <div className="mb-1">
+        { this.renderDeleteButton(movie) }
+        </div>
+        */ }
+        <div>
+        { this.renderReviewButton(movie) }
+        </div>
+      </div>
+    )},
   ];
 
   renderCartButton(movie) {

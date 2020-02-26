@@ -56,7 +56,7 @@ class Customers extends Component {
     if (loading) return <Spinner />;
 
     return (
-      <>
+      <div className="container pt-5">
         <h2>Customers</h2>
         <div className="col">
           <p className="align-middle">
@@ -84,7 +84,7 @@ class Customers extends Component {
             onSort={this.handleSort}
           />
         </div>
-      </>
+      </div>
     );
   }
 }

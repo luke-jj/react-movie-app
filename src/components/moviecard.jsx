@@ -7,7 +7,7 @@ import Star from './common/star';
 import PosterLink from './posterlink';
 
 const Card = styled.div`
-  width: 160px;
+  width: 156px;
   height: 290px;
   background-color: rgb(25, 25, 25);
 `;
@@ -62,7 +62,7 @@ const StarContainer = styled.div`
 const MovieCard = ({ movie, loading, onLike }) => (
   <Card className="card">
     <div className="position-relative">
-      <PosterLink movie={movie} height={236} width={160}/>
+      <PosterLink movie={movie} height={236} width={158}/>
       <BookmarkContainer>
         { loading ? (
           <div className="spinner-border" role="status">

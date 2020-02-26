@@ -58,7 +58,7 @@ class Profile extends Form {
     if (!auth.getCurrentUser()) return <Redirect to="/" />;
 
     return (
-      <AuthContainer>
+      <AuthContainer className="container pt-5">
         <h2>User Profile</h2>
         <form onSubmit={this.handleSubmit}>
           <fieldset disabled={!this.props.user.isAdmin}>

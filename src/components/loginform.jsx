@@ -41,7 +41,7 @@ class LoginForm extends Form {
     if (auth.getCurrentUser()) return <Redirect to="/" />;
 
     return (
-      <AuthContainer>
+      <AuthContainer className="container pt-5">
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
           { this.renderInput('username', 'Email') }

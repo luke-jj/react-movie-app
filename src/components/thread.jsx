@@ -93,7 +93,7 @@ class Thread extends Component {
     }
 
     return (
-      <ThreadWrapper>
+      <ThreadWrapper className="container pt-5">
         <div className="card mb-3">
           <div className="card-header">
             <h3>{thread.title}</h3>
