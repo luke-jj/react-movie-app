@@ -1,9 +1,8 @@
 import * as Sentry from '@sentry/browser';
+import config from '../config';
 
 function init() {
-  Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN
-  });
+  Sentry.init({ dsn: config.SENTRY_DSN });
 }
 
 function log(error) {
