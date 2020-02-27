@@ -4,9 +4,9 @@ import _ from 'lodash';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
+import { paginate } from '../utils';
 import { getMovies, deleteMovie } from '../services/movieService';
 import { getGenres } from '../services/genreService';
-import { paginate } from '../utils/paginate';
 import MoviesTable from '../components/moviestable';
 import Pagination from '../components/common/pagination';
 import GenreList from '../components/genrelist';

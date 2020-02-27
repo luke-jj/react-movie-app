@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { overlay } from '../utils';
 import Poster from './poster';
-import overlay from '../utils/overlay';
 
 const StyledLink = styled(Link)`
   display: block;
-
   ${overlay}
 `;
 

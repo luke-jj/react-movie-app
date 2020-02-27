@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-const overlay = css`
+export const overlay = css`
   position: relative;
 
   &:after {
@@ -20,5 +20,3 @@ const overlay = css`
     opacity: 1;
   }
 `;
-
-export default overlay;
