@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import Table from './common/table';
@@ -52,5 +53,12 @@ class RentalTable extends Component {
     );
   }
 }
+
+RentalTable.propTypes = {
+  rentals: PropTypes.array.isRequired,
+  sortColumn: PropTypes.object.isRequired,
+  onSort: PropTypes.func.isRequired,
+  onReturn: PropTypes.func.isRequired,
+};
 
 export default RentalTable;

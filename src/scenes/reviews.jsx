@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { getReviews } from '../services/reviewService';
 import Spinner from '../components/common/spinner';
 import styled from 'styled-components';
@@ -43,6 +44,10 @@ class Reviews extends Component {
     );
   }
 }
+
+Reviews.propTypes = {
+  user: PropTypes.object
+};
 
 const ReviewWrapper = styled.div`
   max-width: 800px;

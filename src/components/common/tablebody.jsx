@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 class TableBody extends Component {
-  renderCell = (item, column) => {
-    if (column.content) {
-      return column.content(item);
-    }
-
-    return _.get(item, column.path);
-  };
+  renderCell = (item, column) => (
+    column.content ? column.content(item) : _.get(item, column.path)
+  );
 
   createKey = (item, column) => item._id + (column.path || column.key);
 
@@ -30,5 +27,10 @@ class TableBody extends Component {
     );
   }
 }
+
+TableBody.propTypes = {
+  data: PropTypes.array.isRequired,
+  columns: PropTypes.array.isRequired
+};
 
 export default TableBody;

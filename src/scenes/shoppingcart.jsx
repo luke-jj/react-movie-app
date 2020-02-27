@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import styled from 'styled-components';
 import Table from '../components/common/table';
@@ -174,6 +175,15 @@ class ShoppingCart extends Component {
     );
   }
 }
+
+ShoppingCart.propTypes = {
+  items: PropTypes.array.isRequired,
+  onReset: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired,
+  onIncrement: PropTypes.func.isRequired,
+  onDecrement: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
+};
 
 const CartWrapper = styled.div`
   max-width: 600px;

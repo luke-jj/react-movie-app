@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -130,5 +131,9 @@ class Forum extends Component {
     );
   }
 }
+
+Forum.propTypes = {
+  user: PropTypes.object
+};
 
 export default Forum;

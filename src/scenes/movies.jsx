@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -228,6 +229,14 @@ class Movies extends Component {
     );
   }
 }
+
+Movies.propTypes = {
+  user: PropTypes.object,
+  bookmarks: PropTypes.array.isRequired,
+  shoppingCart: PropTypes.array.isRequired,
+  onLike: PropTypes.func.isRequired,
+  onAddToCart: PropTypes.func.isRequired
+};
 
 const Topbar = styled.div`
   height: 35px;

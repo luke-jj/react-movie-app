@@ -13,6 +13,7 @@ const Bookmarks = ({ bookmarks }) => (
 );
 
 Bookmarks.propTypes = {
+  user: PropTypes.object,
   bookmarks: PropTypes.array.isRequired
 };
 

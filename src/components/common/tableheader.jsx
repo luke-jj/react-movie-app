@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 class TableHeader extends Component {
@@ -56,5 +57,10 @@ const Th = styled.th`
     cursor: pointer;
   }
 `;
+
+TableHeader.propTypes = {
+  columns: PropTypes.array.isRequired,
+  sortColumn: PropTypes.object.isRequired
+};
 
 export default TableHeader;

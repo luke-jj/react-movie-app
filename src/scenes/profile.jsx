@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Joi from 'joi-browser';
 import { toast } from 'react-toastify';
 
@@ -131,6 +132,10 @@ class Profile extends Form {
       </AuthContainer>
     );
   }
+};
+
+Profile.propTypes = {
+  user: PropTypes.object
 };
 
 export default Profile;

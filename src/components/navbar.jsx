@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const NavIcon = styled(NavLink)`
@@ -102,5 +103,10 @@ const Navbar = ({ shoppingCart, user }) => {
     </nav>
   );
 }
+
+Navbar.propTypes = {
+  user: PropTypes.object,
+  shoppingCart: PropTypes.array.isRequired
+};
 
 export default Navbar;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Overdrive from 'react-overdrive';
 import Poster from '../components/poster';
@@ -42,6 +43,10 @@ class MovieDetail extends Component {
     );
   }
 }
+
+MovieDetail.propTypes = {
+  user: PropTypes.object
+};
 
 export default MovieDetail;
 

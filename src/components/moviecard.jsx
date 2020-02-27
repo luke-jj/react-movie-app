@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Like from './common/like';
@@ -84,5 +85,11 @@ const MovieCard = ({ movie, loading, onLike }) => (
     </CardBody>
   </Card>
 );
+
+MovieCard.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  movie: PropTypes.object.isRequired,
+  onLike: PropTypes.func.isRequired
+};
 
 export default MovieCard;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const SearchBox = ({text, onSearch}) => (
   <div className="input-group my-3">
@@ -11,5 +12,10 @@ const SearchBox = ({text, onSearch}) => (
     />
   </div>
 );
+
+SearchBox.propTypes = {
+  text: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired
+};
 
 export default SearchBox;

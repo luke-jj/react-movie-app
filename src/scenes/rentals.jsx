@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
 import { getRentals, returnRental } from '../services/rentalService';
@@ -96,5 +97,9 @@ class Rentals extends Component {
     );
   }
 }
+
+Rentals.propTypes = {
+  user: PropTypes.object
+};
 
 export default Rentals;

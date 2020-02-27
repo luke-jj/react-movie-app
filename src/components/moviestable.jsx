@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Table from './common/table';
 import MovieCard from './moviecard'
@@ -172,5 +173,15 @@ class MoviesTable extends Component {
     );
   }
 }
+
+MoviesTable.propTypes = {
+  user: PropTypes.object,
+  movies: PropTypes.array.isRequired,
+  sortColumn: PropTypes.object.isRequired,
+  onSort: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onLike: PropTypes.func.isRequired,
+  onAddToCart: PropTypes.func.isRequired,
+};
 
 export default MoviesTable;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 const Poster = ({ movie, shadow }) => (
@@ -8,6 +9,11 @@ const Poster = ({ movie, shadow }) => (
     shadow={shadow}
   />
 );
+
+Poster.propTypes = {
+  movie: PropTypes.object.isRequired,
+  shadow: PropTypes.bool
+};
 
 export default Poster;
 

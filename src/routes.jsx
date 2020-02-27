@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Logout from './actions/logout';
 import LoginForm from './components/loginform';
@@ -169,5 +170,18 @@ const Routes = ({
     <Redirect to="/not-found" />
   </Switch>
 );
+
+Routes.propTypes = {
+  user: PropTypes.object,
+  bookmarks: PropTypes.array.isRequired,
+  shoppingCart: PropTypes.array.isRequired,
+  onLike: PropTypes.func.isRequired,
+  onAddToCart: PropTypes.func.isRequired,
+  onReset: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired,
+  onIncrement: PropTypes.func.isRequired,
+  onDecrement: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
+};
 
 export default Routes;

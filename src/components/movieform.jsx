@@ -1,6 +1,7 @@
 import React from 'react';
 import Joi from 'joi-browser';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 import Form from './common/form';
 import { getGenres } from '../services/genreService';
@@ -92,6 +93,10 @@ class MovieForm extends Form {
       </div>
     );
   }
+};
+
+MovieForm.propTypes = {
+  user: PropTypes.object
 };
 
 const StyledForm = styled.form`

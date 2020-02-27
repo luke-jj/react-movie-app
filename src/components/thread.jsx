@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import Joi from 'joi-browser';
 import styled from 'styled-components';
@@ -164,6 +165,10 @@ class Thread extends Component {
     );
   }
 }
+
+Thread.propTypes = {
+  user: PropTypes.object
+};
 
 export const ThreadWrapper = styled.div`
   width: 800px;

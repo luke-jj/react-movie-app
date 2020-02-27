@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ListGroup from './common/listgroup';
 
@@ -27,5 +28,11 @@ const GenreList = ({genres, selectedGenre, onGenreSelect}) => (
     />
   </GenreListContainer>
 );
+
+GenreList.propTypes = {
+  genres: PropTypes.array.isRequired,
+  selectedGenre: PropTypes.object.isRequired,
+  onGenreSelect: PropTypes.func.isRequired
+}
 
 export default GenreList;
