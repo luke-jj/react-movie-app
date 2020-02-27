@@ -26,7 +26,9 @@ class Home extends PureComponent {
         <MovieGrid>
           {this.state.movies.map(movie => (
             <Overdrive key={movie._id} id={movie._id}>
-              <PosterLink movie={movie} width="100%" height="231px" shadow />
+              <PosterContainer>
+                <PosterLink movie={movie} shadow />
+              </PosterContainer>
             </Overdrive>
           ))}
         </MovieGrid>
@@ -41,6 +43,10 @@ const Container = styled.div`
   padding: 1rem;
   background: #222;
   padding-top: 40px;
+`;
+
+const PosterContainer = styled.div`
+  max-width: 154px;
 `;
 
 const MovieGrid = styled.div`
