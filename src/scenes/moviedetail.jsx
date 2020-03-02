@@ -1,47 +1,47 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Overdrive from 'react-overdrive';
 import Poster from '../components/poster';
 import { getMovie } from '../services/movieService';
 
-class MovieDetail extends Component {
-  state = {
-    movie: {},
-  }
+function MovieDetail({ match, history, user }) {
+  const [movie, setMovie] = useState({});
+  const { id } = match.params;
+  const { replace } = history;
 
-  async componentDidMount() {
-    try {
-      const { data: movie } = await getMovie(this.props.match.params.id);
-      this.setState(state => ({ movie }));
-    } catch (ex) {
-      if (ex.response && ex.response.status === 404) {
-        this.props.history.replace('/not-found');
+  useEffect(() => {
+    const loadMovie = async () => {
+      try {
+        const { data: movie } = await getMovie(id);
+        setMovie(movie);
+      } catch (ex) {
+        if (ex.response && ex.response.status === 404) {
+          replace('/not-found');
+        }
       }
     }
-  }
 
-  render() {
-    const { movie } = this.state;
+    loadMovie();
+  }, [id, replace]);
 
-    return (
-      <MovieWrapper
-        backdrop={movie.backdropPath ? `https://image.tmdb.org/t/p/w1280${movie.backdropPath}` : ''}
-      >
-        <MovieInfo>
-          <Overdrive id={`${movie._id}`}>
-            <Poster movie={movie} shadow />
-          </Overdrive>
-          <div>
-            <h1>{movie.title}</h1>
-            <h3>{movie.releaseDate}</h3>
-            <p>{movie.description}</p>
-            <p>{movie.rating}</p>
-          </div>
-        </MovieInfo>
-      </MovieWrapper>
-    );
-  }
+  return (
+    <MovieWrapper
+      backdrop={movie.backdropPath ? `https://image.tmdb.org/t/p/w1280${movie.backdropPath}` : ''}
+    >
+      <MovieInfo>
+        <Overdrive id={`${movie._id}`}>
+          <Poster movie={movie} shadow />
+        </Overdrive>
+        <div>
+          <h1>{movie.title}</h1>
+          <h3>{movie.releaseDate}</h3>
+          <p>{movie.description}</p>
+          <p>{movie.rating}</p>
+        </div>
+      </MovieInfo>
+    </MovieWrapper>
+  );
 }
 
 MovieDetail.propTypes = {
