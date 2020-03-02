@@ -21,7 +21,7 @@ class Movies extends Component {
     this.state = {
       movies: [],
       genres: [],
-      pageSize: 4,
+      pageSize: 10,
       currentPage: 1,
       searchText: '',
       sortColumn: { path: 'title', order: 'asc' }
@@ -166,7 +166,7 @@ class Movies extends Component {
     } = this.state;
 
     if (!count) {
-      return <Spinner />;
+      return <Spinner marginTop />;
     }
 
     return (

@@ -26,7 +26,7 @@ class MovieDetail extends Component {
 
     return (
       <MovieWrapper
-        backdrop={movie.backdropPath ? `http://image.tmdb.org/t/p/w1280${movie.backdropPath}` : ''}
+        backdrop={movie.backdropPath ? `https://image.tmdb.org/t/p/w1280${movie.backdropPath}` : ''}
       >
         <MovieInfo>
           <Overdrive id={`${movie._id}`}>

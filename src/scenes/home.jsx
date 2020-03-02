@@ -4,21 +4,27 @@ import Overdrive from 'react-overdrive';
 import { above } from '../utils';
 import { getMovies } from '../services/movieService';
 import PosterLink from '../components/posterlink';
+import Spinner from '../components/common/spinner';
 
 function Home() {
+  const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
-  const saveMovies = async () => {
+
+  const loadMovies = async () => {
     const { data: movies } = await getMovies();
+    setLoading(false);
     setMovies(movies);
   };
 
   useEffect(() => {
     const originalBackground = window.getComputedStyle(document.body);
     document.body.style = 'background: #222';
-    saveMovies();
+    loadMovies();
 
     return () => document.body.style = originalBackground;
   }, []);
+
+  if (loading) return <Spinner marginTop />
 
   return (
     <Container >

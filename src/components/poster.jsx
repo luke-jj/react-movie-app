@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 
 const Poster = ({ movie, shadow }) => (
   <Img
-    src={movie.posterPath ? `http://image.tmdb.org/t/p/w154${movie.posterPath}` : ''}
+    src={movie.posterPath ? `https://image.tmdb.org/t/p/w154${movie.posterPath}` : ''}
     alt={movie.title}
     shadow={shadow}
   />

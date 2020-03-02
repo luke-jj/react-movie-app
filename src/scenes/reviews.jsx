@@ -18,7 +18,7 @@ class Reviews extends Component {
   }
 
   render() {
-    if (this.state.loading) return <Spinner />;
+    if (this.state.loading) return <Spinner marginTop />;
 
     return (
       <ReviewWrapper className="container pt-5">
